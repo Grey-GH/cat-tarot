@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>캣타로 리딩</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0d1c; --phone:#14162b; --surface:rgba(255,255,255,.07); --surface2:rgba(255,255,255,.12); --line:rgba(255,255,255,.28);
+  --text:#ffffff; --muted:rgba(255,255,255,.72); --faint:rgba(255,255,255,.5);
+  --gold:#d9b66e; --gold2:#f0d79c; --goldsoft:rgba(217,182,110,.16);
+  --sel:#e4e4ef; --seltext:#1c1d33;
+  --red:#ff8a80; --ok:#a5e0c0;
+  --serif:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;
+  --hand:"Gaegu","Nanum Pen Script","Apple SD Gothic Neo",cursive;
+  --display:"Cinzel","Trajan Pro","Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;
+  --skin1:#1d2547; --skin2:#0f1430; --skinA:#d9b66e;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.55;display:flex;justify-content:center}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,textarea{font:inherit;color:inherit}
+#app{width:100%;max-width:430px;min-height:100%;position:relative;display:flex;flex-direction:column;overflow-x:hidden;background:radial-gradient(120% 55% at 85% 0%,rgba(140,120,200,.35),transparent 60%),radial-gradient(90% 50% at 10% 100%,rgba(196,186,240,.55),transparent 70%),linear-gradient(180deg,#121429 0%,#1d2150 32%,#3c3f93 62%,#6d6fd0 84%,#a9a3e3 100%);background-attachment:local}
+#app.light{background:radial-gradient(90% 40% at 50% 8%,rgba(255,255,255,.75),transparent 70%),linear-gradient(180deg,#e9e7f4 0%,#c9c2ea 22%,#8d8fe0 46%,#4b4fb0 68%,#20224f 86%,#0e0f22 100%)}
+@media(min-width:520px){body{padding:24px 0;background:radial-gradient(1200px 600px at 50% -10%,#231c35,var(--bg))}#app{min-height:calc(100vh - 48px);border-radius:28px;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.5)}}
+.top{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;position:sticky;top:0;z-index:20;background:linear-gradient(#121429 60%,rgba(18,20,41,0));}
+.light .top{background:none;position:relative}
+.menu{width:28px;height:28px;display:flex;align-items:center;justify-content:center}
+.light .menu{color:#141530}
+.light .textbtn{color:rgba(255,255,255,.7)}
+.mitem{display:flex;justify-content:space-between;align-items:center;width:100%;padding:15px 2px;border-bottom:1px solid rgba(255,255,255,.12);font-size:15px;text-align:left}
+.top.bd{}
+.top .ttl{font-weight:700;font-size:16px;display:flex;align-items:center;gap:6px}
+.top .sub{font-size:13px;color:var(--muted)}
+.back{display:flex;align-items:center;gap:6px;font-weight:700;font-size:16px}
+.back svg{width:20px;height:20px}
+.body{flex:1;padding:8px 20px 120px}
+.foot{position:sticky;bottom:0;padding:26px 20px calc(18px + env(safe-area-inset-bottom));z-index:15;background:linear-gradient(rgba(28,30,78,0),rgba(28,30,78,.72) 38%)}
+.light .foot{background:none}
+.btn{width:100%;height:52px;border-radius:12px;background:#e7e7ee;color:#1c1d33;font-weight:700;font-size:16px;transition:.15s;box-shadow:0 6px 20px rgba(10,10,40,.25)}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{background:rgba(231,231,238,.35);color:rgba(28,29,51,.45);cursor:default;box-shadow:none}
+.textbtn{display:block;margin:12px auto 0;font-size:14px;color:var(--muted)}
+.btn.ghost{background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--text);font-weight:700;box-shadow:none;backdrop-filter:blur(8px)}
+.btnrow{display:flex;gap:10px}
+.link{color:var(--gold);font-weight:700;font-size:14px}
+.h1{font-size:23px;line-height:1.42;font-weight:800;letter-spacing:-.4px}
+.lead{color:var(--muted);font-size:14px;margin-top:8px}
+.sec{margin-top:26px}
+.sec-t{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:10px;letter-spacing:.2px}
+.box{border:1px solid var(--line);border-radius:16px;padding:14px 16px;background:var(--surface);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.box+.box{margin-top:10px}
+.muted{color:var(--muted)} .faint{color:var(--faint)} .small{font-size:13px} .xs{font-size:12px}
+.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:13px;background:var(--surface)}
+.chip.gold{border-color:rgba(217,182,110,.5);color:var(--gold2);background:var(--goldsoft)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:2px 7px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
+.tag.gold{border-color:var(--gold);color:var(--gold)}
+.tag.free{border-color:#4d6b5c;color:var(--ok)}
+/* home */
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cat{border:1px solid rgba(255,255,255,.4);border-radius:18px;padding:16px 14px;text-align:left;background:rgba(255,255,255,.06);transition:.15s;backdrop-filter:blur(8px)}
+.cat b{display:block;font-size:16px}
+.cat span{font-size:12px;color:var(--muted)}
+.cat b,.cat span{transition:.15s}
+.qopt{display:block;width:100%;text-align:left;border:1px solid rgba(255,255,255,.4);border-radius:16px;padding:17px 16px;background:rgba(255,255,255,.06);font-weight:700;font-size:15px;backdrop-filter:blur(8px);transition:.15s}
+.qopt+.qopt{margin-top:12px}
+.qopt.on{background:var(--sel);color:var(--seltext);border-color:var(--sel)}
+.cat.on{background:var(--sel);border-color:var(--sel)}
+.cat.on b{color:var(--seltext)}
+.cat.on span{color:rgba(28,29,51,.65)}
+.qlist .q{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px}
+.qlist .q:last-child{border-bottom:0}
+.daily{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left}
+.hero{position:relative;height:300px;margin:34px -20px 0}
+.hero .card{position:absolute;width:150px;height:244px;top:20px;left:50%;font-size:17px;box-shadow:0 18px 40px rgba(10,10,40,.45);border-radius:10px}
+.hero .hc0{transform:translateX(-140%) rotate(-8deg);top:44px}
+.hero .hc1{transform:translateX(-50%);z-index:2}
+.hero .hc2{transform:translateX(40%) rotate(8deg);top:44px}
+.arrows{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.arrows .hint{flex:1;padding:0 4px;font-size:11.5px}
+/* question */
+.qin{width:100%;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-size:17px;resize:none;outline:none;min-height:84px;line-height:1.45}
+.qin:focus{border-color:var(--gold)}
+.cnt{text-align:right;font-size:12px;color:var(--faint);margin-top:6px}
+.spread{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;border:1px solid var(--line);border-radius:16px;padding:14px 16px;background:var(--surface)}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scard{text-align:left;border:1px solid rgba(255,255,255,.4);border-radius:18px;padding:18px 14px;min-height:150px;background:rgba(255,255,255,.06);display:flex;flex-direction:column;justify-content:center;gap:6px;backdrop-filter:blur(8px);transition:.15s}
+.scard b{font-size:16px}
+.scard span{font-size:12.5px;line-height:1.5;color:var(--muted)}
+.scard.on{background:var(--sel);border-color:var(--sel);color:var(--seltext)}
+.scard.on span{color:rgba(28,29,51,.7)}
+.spread+.spread{margin-top:10px}
+.spread.on{background:var(--sel);color:var(--seltext)}
+.spread b{font-size:16px}
+.radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;position:relative}
+.on .radio{border-color:var(--gold)}
+.on .radio:after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--gold)}
+.note{font-size:13px;color:var(--muted);text-align:center;margin-top:14px}
+/* cards */
+.card{position:relative;border-radius:8px;overflow:hidden;flex:none}
+.back-face{width:100%;height:100%;border-radius:inherit;background:linear-gradient(160deg,var(--skin1),var(--skin2));border:1.5px solid var(--skinA);display:flex;align-items:center;justify-content:center;position:relative}
+.back-face:before{content:"";position:absolute;inset:4px;border:1px solid color-mix(in srgb,var(--skinA) 45%,transparent);border-radius:5px}
+.back-face svg{position:absolute;inset:0;width:100%;height:100%}
+.front-face{width:100%;height:100%;border-radius:inherit;background:#15132a;border:2px solid #c9a24a;padding:5%;display:flex;flex-direction:column;gap:4%;box-shadow:inset 0 0 0 1px #6b5420}
+.front-face .num{align-self:center;background:#f3e6c4;color:#2a2033;font-family:var(--display);font-weight:700;font-size:.62em;line-height:1;padding:.28em .7em;border-radius:.3em;border:1px solid #9c7b30;min-width:2.4em;text-align:center}
+.front-face .art{flex:1;border-radius:4px;overflow:hidden;position:relative;border:1px solid #9c7b30}
+.front-face .art svg{position:absolute;inset:0;width:100%;height:100%}
+.front-face .nm{background:#f3e6c4;color:#2a2033;font-family:var(--display);font-weight:700;font-size:.5em;letter-spacing:.02em;line-height:1.15;padding:.4em .3em;border-radius:.3em;border:1px solid #9c7b30;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flip{perspective:800px}
+.flip .inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,.7,.2,1)}
+.flip .inner>div{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip .inner>div:last-child{transform:rotateY(180deg)}
+.flip.open .inner{transform:rotateY(180deg)}
+.repeat{outline:2.5px solid var(--red);outline-offset:2px}
+/* draw */
+.ritual{text-align:center;margin-top:14px}
+.ritual .q{font-size:13px;color:var(--muted)}
+.deckwrap{position:relative;height:250px;margin:14px -20px 0}
+.deck{display:flex;overflow-x:auto;overflow-y:visible;height:250px;padding:44px calc(50% - 40px) 0;scrollbar-width:none;scroll-snap-type:x proximity}
+.deck::-webkit-scrollbar{display:none}
+.deck .dc{width:80px;height:130px;margin-left:-44px;border-radius:7px;box-shadow:-4px 4px 12px rgba(0,0,0,.35);transform-origin:50% 160%;transition:transform .2s, opacity .3s;cursor:pointer;scroll-snap-align:center}
+.deck .dc:first-child{margin-left:0}
+.deck .dc.taken{opacity:0;pointer-events:none;width:0;margin-left:0}
+.deck .dc.up{z-index:5;position:relative}
+.deck .dc.up .back-face{box-shadow:0 0 0 2px var(--gold2),0 10px 24px rgba(0,0,0,.5)}
+.hint{text-align:center;font-size:12px;color:var(--faint)}
+.slots{display:flex;justify-content:center;gap:14px;margin-top:22px}
+.slot{width:78px;text-align:center}
+.slot .sl{width:78px;height:126px;border-radius:9px;border:1.5px dashed var(--line);display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:12px}
+.slot .sl.next{border-color:var(--gold);color:var(--gold)}
+.slot .sl .card{width:100%;height:100%}
+.slot p{font-size:13px;margin-top:6px;color:var(--muted)}
+.shuffle{height:210px;display:flex;align-items:center;justify-content:center;position:relative}
+.shuffle .card{position:absolute;width:64px;height:104px;animation:shuf 1.1s ease-in-out infinite}
+@keyframes shuf{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-46px) rotate(-10deg)}75%{transform:translateX(46px) rotate(10deg)}}
+.pos-guide{text-align:center;margin-top:6px}
+.pos-guide b{font-family:var(--serif);font-size:20px}
+.pos-guide p{font-size:13px;color:var(--muted);margin-top:2px}
+/* celtic map */
+.cmap{position:relative;margin:0 auto}
+.cmap .cell{position:absolute;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint);border:1.5px dashed var(--line)}
+.cmap .cell.filled{border:0}
+.cmap .cell.next{border-color:var(--gold);color:var(--gold)}
+.cmap .cell .card{width:100%;height:100%}
+.cmap .cell.c2{transform:rotate(90deg);z-index:3}
+.cmap .no{position:absolute;top:-7px;left:-7px;width:18px;height:18px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);font-size:10px;font-weight:800;color:var(--text);display:flex;align-items:center;justify-content:center;z-index:4}
+.cmap .cell.c2 .no{transform:rotate(-90deg)}
+/* result */
+.qcard{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface)}
+.qcard .lbl{font-size:12px;color:var(--muted)}
+.qcard .qq{font-family:var(--serif);font-size:19px;font-weight:700;margin-top:2px}
+.qcard .meta{font-size:12px;color:var(--faint);margin-top:6px}
+.three{display:flex;justify-content:center;gap:12px;margin-top:22px}
+.three .col{width:96px;text-align:center;cursor:pointer}
+.three .pl{font-size:13px;color:var(--muted);margin-bottom:8px}
+.three .card{width:96px;height:156px;font-size:14px}
+.three .kw{margin-top:10px;font-weight:700;font-size:14px}
+.three .cn{font-size:12px;color:var(--muted)}
+.lock{border:1px dashed var(--line);border-radius:14px;padding:13px 16px;font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
+.lock svg{flex:none;width:16px;height:16px;margin-top:2px}
+/* detail */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:0 -20px;padding:0 20px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{padding:10px 12px;font-size:14px;color:var(--faint);border-bottom:2px solid transparent;flex:none;font-weight:700}
+.tabs button.on{color:var(--text);border-bottom-color:var(--gold)}
+.dhead{display:flex;gap:16px;margin-top:18px;align-items:flex-start}
+.dhead .card{width:96px;height:156px;font-size:14px}
+.dhead h2{font-family:var(--serif);font-size:23px;line-height:1.25}
+.dhead .info{font-size:12px;color:var(--muted);margin-top:4px}
+.step{margin-top:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.step summary{list-style:none;padding:13px 16px;font-weight:800;display:flex;justify-content:space-between;cursor:pointer;font-size:15px}
+.step summary::-webkit-details-marker{display:none}
+.step summary:after{content:"＋";color:var(--faint);font-weight:400}
+.step[open] summary:after{content:"－"}
+.step .sb{padding:0 16px 15px;font-size:15px;color:#e3dccd}
+.step.locked .sb .blur{filter:blur(4.5px);user-select:none;opacity:.7}
+.rel{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.rel:first-child{border-top:0;padding-top:0}
+.rel .sy{width:22px;height:22px;flex:none;border-radius:6px;background:var(--goldsoft);color:var(--gold2);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.navrow{display:flex;justify-content:space-between;gap:10px}
+.navrow .btn{flex:1}
+/* summary */
+.concl{font-family:var(--serif);font-size:22px;line-height:1.5;font-weight:700;margin-top:6px}
+.ev{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.ev:first-child{border-top:0;padding-top:2px}
+.ev .tag{flex:none;margin-top:2px;min-width:52px;text-align:center}
+.act{display:flex;gap:10px;font-size:15px;padding:6px 0}
+.act b{color:var(--gold);flex:none}
+.upsell{border:1px solid rgba(217,182,110,.55);border-radius:16px;padding:16px;background:linear-gradient(160deg,rgba(217,182,110,.12),rgba(217,182,110,.03))}
+.upsell p{font-size:15px}
+.upsell .btn{margin-top:12px;height:48px}
+.basis{font-size:12px;color:var(--faint);margin-top:22px;line-height:1.7}
+/* sheet */
+.dim{position:fixed;inset:0;background:rgba(5,3,10,.62);z-index:50;display:flex;justify-content:center;align-items:flex-end;animation:fade .2s}
+.sheet{width:100%;max-width:430px;background:#1b1e44;border-radius:22px 22px 0 0;padding:10px 20px calc(20px + env(safe-area-inset-bottom));animation:up .25s cubic-bezier(.2,.8,.2,1);max-height:92vh;overflow:auto}
+.sheet .grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 14px}
+.sheet h3{font-family:var(--serif);font-size:21px}
+.incl li{list-style:none;padding:5px 0;font-size:14px;display:flex;gap:8px}
+.incl li:before{content:"✓";color:var(--gold);font-weight:800}
+.bal{display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:14px 0;font-size:14px}
+.bal b{font-size:16px}
+.short{color:var(--red)}
+@keyframes fade{from{opacity:0}}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:#f2ece0;color:#1a1424;padding:10px 16px;border-radius:12px;font-size:14px;font-weight:700;z-index:80;max-width:340px;text-align:center;animation:fade .2s}
+.modal{width:calc(100% - 48px);max-width:360px;background:#1b1e44;border:1px solid var(--line);border-radius:18px;padding:22px 20px 18px;margin:auto;align-self:center;text-align:center}
+.modal h3{font-family:var(--serif);font-size:19px;margin-bottom:6px}
+.modal .btnrow{margin-top:18px}
+/* skin */
+.reveal{display:flex;justify-content:center;margin-top:26px}
+.reveal .card{width:150px;height:244px;font-size:18px}
+.rar{display:inline-block;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;border:1px solid}
+.dex{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:10px}
+.dex .d{aspect-ratio:3/5;border-radius:5px;overflow:hidden;opacity:.25}
+.dex .d.have{opacity:1}
+.dex .d .back-face{border-width:1px}
+.dex .d .back-face:before{display:none}
+/* chart */
+table.ct{width:100%;border-collapse:collapse;font-size:13px}
+table.ct th{font-size:11px;color:var(--faint);font-weight:700;text-align:left;padding:0 6px 8px;white-space:nowrap}
+table.ct td{padding:8px 6px;border-top:1px solid var(--line);white-space:nowrap}
+.bar{display:flex;align-items:center;gap:10px;font-size:13px;margin:7px 0}
+.bar .bl{width:64px;color:var(--muted);flex:none}
+.bar .bt{flex:1;height:10px;border-radius:5px;background:var(--surface2);overflow:hidden}
+.bar .bf{height:100%;background:var(--faint);border-radius:5px}
+.bar.hi .bf{background:var(--gold)}
+.bar .bv{width:16px;text-align:right;font-weight:800}
+.formula{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--muted);word-break:break-all;margin-top:6px}
+.big{font-family:var(--serif);font-size:20px;font-weight:700}
+/* records */
+.rec{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:14px;padding:13px 16px;background:var(--surface)}
+.rec+.rec{margin-top:10px}
+.empty{text-align:center;color:var(--faint);padding:60px 0}
+.coinpill{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:700}
+.fadein{animation:fadeup .45s both}
+#app.noanim .fadein{animation:none}
+@keyframes fadeup{from{opacity:0;transform:translateY(8px)}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+"use strict";
+/* ================= 카드 데이터 ================= */
+const SUITS=[
+ {key:'wands',name:'완드',area:'의지·행동'},
+ {key:'cups',name:'컵',area:'감정'},
+ {key:'swords',name:'소드',area:'생각·갈등'},
+ {key:'pentacles',name:'펜타클',area:'돈·현실'}
+];
+const ROMAN=['0','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI'];
+const MAJORS=[
+['바보','새 출발|자유|모험','아무것도 정해지지 않은 채 첫발을 내딛는 모습이에요. 계산보다 가능성을 믿고 떠나는 카드예요.'],
+['마법사','의지|실행|재능','가진 도구를 모두 꺼내 원하는 것을 만들어내는 힘이에요. 지금 필요한 건 이미 손안에 있어요.'],
+['여사제','직관|침묵|내면','말보다 안에서 이미 알고 있는 답을 듣는 카드예요. 서두르지 않고 지켜볼 때 보이는 것이 있어요.'],
+['여황제','풍요|돌봄|성장','가꾸고 키운 것이 자연스럽게 열매를 맺는 모습이에요. 여유와 넉넉함이 흐르는 카드예요.'],
+['황제','질서|책임|권위','규칙과 구조로 자기 영역을 단단히 세우는 힘이에요. 감정보다 기준이 앞서는 카드예요.'],
+['교황','전통|배움|조언','검증된 길과 믿을 만한 조언을 따르는 카드예요. 혼자보다 기준과 스승이 있는 쪽이에요.'],
+['연인','선택|관계|조화','마음이 가는 쪽을 스스로 고르는 순간이에요. 무엇을 택하든 내 가치와 맞는지가 핵심이에요.'],
+['전차','전진|승리|통제','흔들리는 마음을 다잡고 한 방향으로 밀고 나가는 모습이에요. 의지가 결과를 끌고 가요.'],
+['힘','인내|용기|다정함','억누르지 않고 부드럽게 다스리는 진짜 힘이에요. 조급함을 다루는 사람이 이기는 카드예요.'],
+['은둔자','성찰|고독|탐색','잠시 물러나 혼자만의 등불로 답을 찾는 시간이에요. 바깥 소음보다 내 기준이 중요해요.'],
+['운명의 수레바퀴','전환|흐름|기회','내 힘 밖의 흐름이 바뀌며 새 국면이 열리는 카드예요. 타이밍이 스스로 찾아오는 때예요.'],
+['정의','균형|판단|책임','따져보고 공정하게 결정한 만큼 돌아오는 카드예요. 감정보다 사실을 저울에 올려요.'],
+['매달린 사람','멈춤|관점 전환|내려놓음','잠시 멈춰 거꾸로 볼 때 보이는 답이 있어요. 움직이지 않는 것도 선택인 카드예요.'],
+['죽음','끝맺음|변화|정리','하나가 끝나야 다음이 시작되는 자연스러운 마무리예요. 두려움보다 정리의 카드예요.'],
+['절제','조율|균형|회복','서로 다른 것을 섞어 알맞은 비율을 찾는 모습이에요. 극단 대신 중간을 찾는 카드예요.'],
+['악마','집착|유혹|속박','스스로 묶여 있다는 걸 알면서도 놓지 못하는 상태예요. 사슬은 생각보다 느슨해요.'],
+['탑','붕괴|각성|급변','버티던 구조가 한순간 무너지며 진실이 드러나는 카드예요. 흔들림 뒤에 더 단단한 것이 남아요.'],
+['별','희망|회복|방향','어둠 뒤에 바라는 방향이 다시 보이기 시작하는 카드예요. 막연한 불만이 아니라 원하는 곳이 있어요.'],
+['달','불안|혼란|무의식','또렷하지 않은 길에서 불안이 커지는 시기예요. 보이는 것이 전부는 아니라는 카드예요.'],
+['태양','성공|활력|명료함','모든 게 환하게 드러나고 기운이 차오르는 카드예요. 숨길 것 없이 당당해지는 때예요.'],
+['심판','부름|재평가|부활','지난 일을 돌아보고 다시 일어설 신호를 듣는 카드예요. 미뤄둔 결정이 다시 부르고 있어요.'],
+['세계','완성|통합|성취','한 주기를 온전히 마치고 다음 단계로 넘어가는 카드예요. 지금까지가 하나로 완성돼요.']
+];
+const MINORS={
+wands:[
+['시작|열정|영감','새 일을 향한 뜨거운 첫 불꽃이 손에 쥐어진 모습이에요.'],
+['계획|결정|시야','손에 쥔 것을 보며 더 넓은 세상을 내다보는 카드예요.'],
+['확장|기대|전망','띄운 배가 돌아오길 기다리며 다음 판을 넓히는 모습이에요.'],
+['안정|축하|소속','함께 이룬 것을 기념하며 잠시 쉬어가는 자리예요.'],
+['경쟁|마찰|혼전','여러 의견과 힘이 부딪히며 소란스러운 상황이에요.'],
+['인정|승리|자신감','노력이 알려지고 박수를 받는 순간이에요.'],
+['방어|소신|버팀','높은 곳에서 내 자리를 지키며 맞서는 모습이에요.'],
+['속도|진전|소식','멈춰 있던 일이 한꺼번에 빠르게 움직이는 카드예요.'],
+['경계|끈기|지침','지쳤지만 마지막까지 버티며 경계하는 모습이에요.'],
+['부담|과중|책임','혼자 너무 많은 짐을 짊어지고 걸어가는 모습이에요.'],
+['호기심|탐색|첫 소식','새로운 가능성에 눈을 반짝이며 첫 소식을 전하는 카드예요.'],
+['추진|모험|성급함','뜨겁게 뛰어들지만 방향을 서두르기 쉬운 에너지예요.'],
+['자신감|매력|활기','따뜻한 확신으로 주변을 움직이는 사람이에요.'],
+['비전|리더십|결단','큰 그림을 그리고 사람들을 이끄는 결단력이에요.']],
+cups:[
+['새 감정|설렘|충만','마음이 차올라 넘치기 시작하는 감정의 시작이에요.'],
+['교감|연결|약속','서로의 마음이 같은 높이에서 만나는 카드예요.'],
+['축하|우정|기쁨','좋은 사람들과 기쁨을 나누는 시간이에요.'],
+['권태|무관심|망설임','눈앞에 내민 기회도 보이지 않을 만큼 마음이 멈춘 상태예요.'],
+['상실|후회|아쉬움','쏟아진 것에만 눈이 가 남은 것을 못 보는 모습이에요.'],
+['추억|순수|위로','지난 시절의 따뜻한 기억이 마음을 달래주는 카드예요.'],
+['환상|선택지|흐림','여러 가능성이 다 좋아 보여 무엇이 진짜인지 흐린 상태예요.'],
+['떠나는 마음|미련 없음|탐색','쌓아온 것을 뒤로하고 더 의미 있는 곳을 찾아 떠나는 모습이에요.'],
+['만족|소원|여유','바라던 것이 이루어져 흐뭇하게 앉아 있는 카드예요.'],
+['행복|화목|완성','마음이 머물 곳을 찾아 가족처럼 편안해진 모습이에요.'],
+['감수성|제안|상상','예상치 못한 감정의 소식이 찾아오는 카드예요.'],
+['낭만|제안|이상','마음을 담은 제안을 들고 다가오는 사람이에요.'],
+['공감|직관|배려','남의 마음을 깊이 읽고 품어주는 사람이에요.'],
+['감정 조절|포용|침착','흔들리는 감정 위에서도 중심을 잃지 않는 사람이에요.']],
+swords:[
+['명료함|진실|돌파','흐릿하던 생각이 한 칼에 또렷해지는 순간이에요.'],
+['교착|회피|판단 보류','눈을 가린 채 어느 쪽도 고르지 못하고 버티는 모습이에요.'],
+['상처|슬픔|이별','아픈 말이나 사실이 마음을 꿰뚫는 카드예요.'],
+['휴식|회복|재정비','싸움을 멈추고 몸과 머리를 쉬게 하는 시간이에요.'],
+['갈등|승리의 대가|손해','이기긴 했지만 잃은 것도 많은 다툼이에요.'],
+['이동|전환|회복','힘든 곳을 떠나 잔잔한 물로 건너가는 모습이에요.'],
+['전략|회피|은밀함','정면 대신 조용히 빠져나갈 길을 찾는 카드예요.'],
+['생각의 감옥|자기 제한|무력감','스스로 만든 생각의 감옥에 갇혀 있는 모습이에요.'],
+['걱정|불면|불안','밤새 머릿속 걱정이 커지는 카드예요.'],
+['바닥|끝|재시작','더 내려갈 곳이 없는 바닥에서 새벽이 밝아오는 모습이에요.'],
+['관찰|호기심|경계','주변을 날카롭게 살피며 정보를 모으는 카드예요.'],
+['돌진|결단|성급함','생각이 정해지자 거침없이 밀어붙이는 에너지예요.'],
+['냉철함|독립|직설','감정에 휩쓸리지 않고 사실을 똑바로 보는 사람이에요.'],
+['논리|판단|원칙','원칙과 논리로 공정하게 결정하는 사람이에요.']],
+pentacles:[
+['기회|실속|시작','손에 잡히는 현실적인 기회가 주어지는 카드예요.'],
+['균형 잡기|유연함|조율','여러 일을 저글링하며 균형을 맞추는 모습이에요.'],
+['협업|실력|인정','실력이 쌓여 함께 무언가를 짓는 단계예요.'],
+['붙잡음|안정|통제','가진 것을 꽉 쥐고 놓지 않으려는 모습이에요.'],
+['결핍|소외|어려움','춥고 부족하다고 느끼며 문밖에 서 있는 모습이에요.'],
+['나눔|균형|도움','주고받는 관계 속에서 자원이 흐르는 카드예요.'],
+['기다림|점검|인내','심어둔 것이 자라길 기다리며 지난 노력을 돌아보는 모습이에요.'],
+['숙련|몰입|성실','한 가지를 묵묵히 반복하며 실력을 쌓는 카드예요.'],
+['자립|여유|성취','스스로 일군 것 안에서 넉넉함을 누리는 모습이에요.'],
+['유산|안정|장기적 성공','오래 쌓아온 것이 단단한 기반이 된 카드예요.'],
+['배움|계획|성실','새로운 공부나 계획을 차근차근 시작하는 카드예요.'],
+['꾸준함|신중|책임','느리지만 확실하게 한 걸음씩 가는 사람이에요.'],
+['실용|돌봄|풍요','현실을 잘 꾸리며 주변을 넉넉하게 챙기는 사람이에요.'],
+['부|안정|성취','쌓은 자원으로 단단한 영역을 다스리는 사람이에요.']]
+};
+const GD={
+wands:['불의 힘의 근원','지배의 군주','확립된 힘의 군주','완성된 일의 군주','투쟁의 군주','승리의 군주','용기의 군주','신속의 군주','큰 힘의 군주','억압의 군주'],
+cups:['물의 힘의 근원','사랑의 군주','풍요의 군주','섞인 즐거움의 군주','즐거움 속 상실의 군주','기쁨의 군주','환상 속 성공의 군주','버려진 성공의 군주','물질적 행복의 군주','완성된 성공의 군주'],
+swords:['공기의 힘의 근원','회복된 평화의 군주','슬픔의 군주','투쟁 뒤 휴식의 군주','패배의 군주','얻어낸 성공의 군주','불안정한 노력의 군주','짧아진 힘의 군주','절망과 잔인함의 군주','파멸의 군주'],
+pentacles:['흙의 힘의 근원','조화로운 변화의 군주','물질적 작업의 군주','지상 권력의 군주','물질적 고난의 군주','물질적 성공의 군주','이루지 못한 성공의 군주','신중함의 군주','물질적 이득의 군주','부의 군주']
+};
+const SEPH=['','케테르(왕관)','호크마(지혜)','비나(이해)','헤세드(자비)','게부라(엄격)','티페레트(아름다움)','네차흐(승리)','호드(영광)','예소드(기반)','말쿠트(왕국)'];
+const COURT=['시종','기사','여왕','왕'];
+const COURT_SEPH={'시종':10,'기사':2,'여왕':3,'왕':6};
+const NUMS={0:['무한한 가능성','시작 전'],1:['시작·씨앗','시작하는'],2:['선택·균형','고르는'],3:['확장·표현','넓히는'],4:['구조·안정','지키는'],5:['갈등·변화','흔들리는'],6:['조화·회복','회복하는'],7:['성찰·시험','돌아보는'],8:['힘·이동','움직이는'],9:['성숙·마무리 직전','마무리하는'],10:['완결·다음 순환','완결하는']};
+const NUM_LINE={0:'아직 아무것도 정해지지 않은 가능성 그 자체예요',1:'씨앗을 심는 첫 단계예요',2:'둘 사이에서 고르고 균형을 맞추는 단계예요',3:'처음 것이 밖으로 넓어지는 단계예요',4:'세운 것을 지키려는 단계예요',5:'안정이 흔들리며 변화가 시작되는 단계예요',6:'흔들림 뒤에 조화를 되찾는 단계예요',7:'멈춰서 점검하고 시험받는 단계예요',8:'힘이 붙어 움직이기 시작하는 단계예요',9:'거의 다 와서 마무리를 앞둔 단계예요',10:'한 순환이 끝나고 다음으로 넘어가는 단계예요'};
+const COURT_LINE={'시종':'시종은 배우고 소식을 전하는 첫 계급이에요','기사':'기사는 직접 움직이며 밀고 나가는 계급이에요','여왕':'여왕은 안에서 성숙하게 품는 계급이에요','왕':'왕은 바깥을 다스리며 책임지는 계급이에요'};
+
+const CARDS=[];
+MAJORS.forEach((m,i)=>CARDS.push({id:i,major:true,name:m[0],roman:ROMAN[i],num:i,kw:m[1].split('|'),mean:m[2],suit:null,area:'큰 흐름'}));
+SUITS.forEach((s,si)=>{MINORS[s.key].forEach((m,ri)=>{const r=ri+1;const court=r>10?COURT[r-11]:null;
+ CARDS.push({id:22+si*14+ri,major:false,suit:s.key,suitName:s.name,area:s.area,rank:r,court,num:court?null:r,
+  name:court?`${s.name} ${court}`:(r===1?`${s.name} 에이스`:`${s.name} ${r}`),
+  kw:m[0].split('|'),mean:m[1]});});});
+
+/* ================= 카테고리 · 스프레드 ================= */
+const CATS=[
+{id:'love',label:'연애',sub:'썸 · 재회 · 관계',qs:['그 사람은 나를 어떻게 생각할까?','재회할 수 있을까?','이 관계, 계속해도 될까?','새로운 인연이 찾아올까?','고백해도 괜찮을까?'],
+ dom:{wands:'다가가고 싶은 끌림과 표현',cups:'서로를 향한 마음 그 자체',swords:'관계를 두고 하는 생각과 오해',pentacles:'만남을 이어가게 하는 현실적인 조건',major:'관계의 방향을 바꾸는 큰 흐름'},
+ acts:['그 사람에게 하고 싶은 말을 한 문장으로 적어보기','이 관계에서 내가 바라는 것 3가지 적어보기','답을 기다리는 대신 먼저 안부 한 줄 보내보기','이 관계에서 지키고 싶은 선 하나 정하기']},
+{id:'work',label:'회사 / 이직',sub:'퇴사 · 취업 · 진로',qs:['지금 회사를 떠나도 될까?','이번 채용 결과는 어떻게 될까?','지금이 이직 타이밍일까?','진로를 바꾼다면 어떨까?','취업을 할 수 있을까?'],
+ dom:{wands:'커리어를 밀고 나가려는 의지',cups:'일에서 느끼는 보람과 사람에 대한 감정',swords:'회사와 미래를 두고 하는 머릿속 계산',pentacles:'연봉, 경력, 안정감처럼 손에 잡히는 조건',major:'커리어 전체를 바꾸는 큰 흐름'},
+ acts:['퇴사 후 버틸 수 있는 개월 수를 숫자로 적어보기','관심 회사 한 곳에 지원서 넣어보기','퇴사 없이 해볼 수 있는 실험 하나 정하기','지금 일에서 남기고 싶은 성과 하나 정리하기','믿을 만한 선배 한 명에게 조언 구하기']},
+{id:'people',label:'사람 관계',sub:'친구 · 가족 · 동료',qs:['그 친구와 화해할 수 있을까?','팀 동료와의 관계는 어떻게 될까?','가족과의 갈등은 어떻게 풀릴까?','이 사람을 믿어도 될까?','새 모임에 잘 적응할 수 있을까?'],
+ dom:{wands:'관계를 이끌어가려는 적극성',cups:'서로 주고받는 정과 서운함',swords:'말과 생각에서 생긴 거리',pentacles:'함께 얽힌 현실적인 이해관계',major:'관계 전체의 큰 전환'},
+ acts:['서운했던 일을 감정 없이 한 줄로 적어보기','먼저 연락할 사람 한 명 정하기','거리를 둘 관계와 가까이 할 관계 나눠보기','고마운 사람에게 짧은 메시지 보내기']},
+{id:'health',label:'건강',sub:'마음 · 방향',qs:['요즘 내 컨디션은 어떤 상태일까?','지금 내게 필요한 휴식은 뭘까?','이 불안은 어디서 올까?','생활 습관을 바꾸면 어떻게 될까?','요즘 나는 어디로 가고 있을까?'],
+ dom:{wands:'몸을 움직이게 하는 활력',cups:'요즘 마음의 온도',swords:'머릿속을 채운 생각과 스트레스',pentacles:'몸과 생활의 리듬',major:'삶의 방향을 바꾸는 큰 흐름'},
+ acts:['오늘 나를 지치게 한 것 하나 적어보기','10분 산책하며 질문을 다시 떠올려보기','이번 주 잠드는 시간을 하나로 정해보기','미뤄둔 결정 하나에 기한 붙이기']}
+];
+const POPULAR=[['work','지금 회사를 떠나도 될까?'],['love','그 사람은 나를 어떻게 생각할까?'],['self','지금 내게 필요한 건 뭘까?']];
+const SPREADS={
+ three:{name:'쓰리카드',free:true,n:3,desc:'과거 · 현재 · 미래 흐름으로 보기',
+  pos:[{name:'과거',desc:'지금의 고민을 만든 지난 일'},{name:'현재',desc:'지금 질문의 한가운데'},{name:'미래',desc:'이대로 갈 때 다가올 흐름'}]},
+ one:{name:'원카드',free:true,n:1,desc:'한 장으로 빠르게 답 듣기',pos:[{name:'답',desc:'질문에 대한 한 장의 답'}]},
+ celtic:{name:'켈틱크로스',free:false,n:10,desc:'10장 · 3개월 흐름까지 깊게 읽는 배열',
+  pos:[{name:'현재',desc:'지금 질문의 한가운데 있는 상황'},{name:'장애',desc:'가로막거나 엇갈리는 힘'},{name:'기반',desc:'무의식 깊은 곳의 뿌리'},{name:'과거',desc:'지나온 일, 지금을 만든 원인'},{name:'목표',desc:'의식적으로 바라는 방향'},{name:'가까운 미래',desc:'곧 다가올 일'},{name:'나',desc:'이 상황에서의 내 태도'},{name:'주변',desc:'주변 사람과 환경'},{name:'희망과 두려움',desc:'바라면서도 두려운 것'},{name:'결과',desc:'이대로 갈 때의 결말'}]}
+};
+const COST=15;
+const SKINS=[
+ {id:'basic',name:'기본 덱',rar:'기본',c1:'#1d2547',c2:'#0f1430',a:'#d9b66e',cat:false},
+ {id:'cheese',name:'치즈 고양이 덱',rar:'일반',c1:'#5a3a1c',c2:'#2b1a0c',a:'#f2b45a',cat:'#f2b45a'},
+ {id:'mackerel',name:'고등어 고양이 덱',rar:'일반',c1:'#33404a',c2:'#171e24',a:'#9fb3c2',cat:'#9fb3c2'},
+ {id:'tuxedo',name:'턱시도 고양이 덱',rar:'일반',c1:'#1b1b22',c2:'#0b0b10',a:'#e9e6df',cat:'#e9e6df'},
+ {id:'calico',name:'삼색 고양이 덱',rar:'일반',c1:'#4a2f2a',c2:'#201413',a:'#f0c49a',cat:'#f0c49a'},
+ {id:'gray',name:'회색 고양이 덱',rar:'일반',c1:'#3a3a44',c2:'#1a1a20',a:'#c3c3cf',cat:'#c3c3cf'},
+ {id:'moon',name:'달빛 고양이 덱',rar:'레어',c1:'#1d2b52',c2:'#0b1026',a:'#cfe0ff',cat:'#cfe0ff'},
+ {id:'sakura',name:'벚꽃 고양이 덱',rar:'레어',c1:'#5b2a45',c2:'#26101d',a:'#ffc4dc',cat:'#ffc4dc'},
+ {id:'zodiac',name:'별자리 고양이 덱',rar:'레어',c1:'#22224a',c2:'#0d0d24',a:'#b9b4ff',cat:'#b9b4ff'},
+ {id:'wizard',name:'마법사 고양이 덱',rar:'에픽',c1:'#3b1f5c',c2:'#160b26',a:'#d6a8ff',cat:'#d6a8ff'},
+ {id:'forest',name:'숲속 고양이 덱',rar:'에픽',c1:'#1f3d2c',c2:'#0b1a12',a:'#a6e3b8',cat:'#a6e3b8'},
+ {id:'gold',name:'황금 고양이 덱',rar:'전설',c1:'#5c4310',c2:'#241904',a:'#ffd86b',cat:'#ffd86b'},
+ {id:'galaxy',name:'은하 고양이 덱',rar:'전설',c1:'#2b1450',c2:'#06061a',a:'#9ff0ff',cat:'#9ff0ff'}
+];
+const RAR={일반:{p:60,c:'#a39cb2'},레어:{p:28,c:'#8fb4ff'},에픽:{p:10,c:'#d6a8ff'},전설:{p:2,c:'#ffd86b'},기본:{p:0,c:'#a39cb2'}};
+
+/* ================= 유틸 ================= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function jong(w){w=String(w).trim().replace(/[’‘'"”“)\]\s]+$/,'');const ch=w.slice(-1),c=ch.charCodeAt(0);
+ if(c>=0xAC00&&c<=0xD7A3)return (c-0xAC00)%28;
+ if(/[0-9]/.test(ch))return {0:21,1:8,2:0,3:16,4:0,5:0,6:1,7:8,8:8,9:0}[ch];
+ if(/[A-Za-z]/.test(ch))return /[lmnr]/i.test(ch)?8:0; return 0;}
+function J(w,a,b){const j=jong(w);if(a==='으로')return w+((j===0||j===8)?'로':'으로');return w+(j?a:b);}
+const EIEYO=w=>w+(jong(w)?'이에요':'예요');
+function hash(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return ()=>{h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^=h>>>16)>>>0;};}
+function rng(seed){let a=hash(seed)();return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function shuffled(seed){const r=rng(seed),a=CARDS.map(c=>c.id);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
+const dotDate=s=>s.replace(/-/g,'.');
+const normQ=q=>q.replace(/\s+/g,' ').replace(/[?？!.\s]+$/,'').trim();
+const cardById=id=>CARDS[id];
+const catById=id=>CATS.find(c=>c.id===id)||CATS[1];
+const LS={get(k,d){try{const v=localStorage.getItem('tarot.'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem('tarot.'+k,JSON.stringify(v));}catch(e){}}};
+let MEM={readings:LS.get('readings',[]),wallet:LS.get('wallet',20),inv:LS.get('inv',['basic']),saved:LS.get('saved',[])};
+function persist(){LS.set('readings',MEM.readings);LS.set('wallet',MEM.wallet);LS.set('inv',MEM.inv);LS.set('saved',MEM.saved);}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2200);}
+const ICON={
+ back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+ lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+ edit:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>'
+};
+const coin=n=>`🪙 ${n}`;
+
+/* ================= 카드 그래픽 ================= */
+function suitSVG(s,col,raw){col=col||'#2a2033';const W=x=>raw?x.replace(/<\/?svg[^>]*>/g,''):x;
+ if(s==='wands')return W(`<svg viewBox="0 0 40 60"><path d="M20 4v52" stroke="${col}" stroke-width="4" stroke-linecap="round"/><path d="M20 14c6-4 9-2 10 2M20 26c-6-4-9-2-10 2M20 38c6-4 9-2 10 2" stroke="${col}" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>`);
+ if(s==='cups')return W(`<svg viewBox="0 0 40 60"><path d="M8 12h24c0 13-5 20-12 20S8 25 8 12z" fill="${col}"/><path d="M20 32v14M12 50h16" stroke="${col}" stroke-width="3.4" stroke-linecap="round"/></svg>`);
+ if(s==='swords')return W(`<svg viewBox="0 0 40 60"><path d="M20 4l4 8v28h-8V12z" fill="${col}"/><path d="M10 40h20" stroke="${col}" stroke-width="3.4" stroke-linecap="round"/><path d="M20 42v12" stroke="${col}" stroke-width="4" stroke-linecap="round"/></svg>`);
+ return W(`<svg viewBox="0 0 40 60"><circle cx="20" cy="30" r="15" fill="none" stroke="${col}" stroke-width="3"/><path d="M20 18l3.5 10.5H34l-8.6 6.3 3.3 10.2L20 38.8l-8.7 6.2 3.3-10.2L6 28.5h10.5z" fill="${col}"/></svg>`);}
+let GID=0;
+const SKY={major:['#2d2463','#7b5fb8','#e9b7a0'],wands:['#5a2d1c','#c7643a','#f5c27a'],cups:['#123b52','#2f7f9a','#9fd6d2'],swords:['#1d2440','#4f6390','#b9c6e0'],pentacles:['#1f3a24','#4f8a4a','#d9d68f']};
+const CATCOL=[['#f0a85a','#c97a35'],['#f3e2c2','#d6bf95'],['#b9b9c6','#8d8d9e'],['#3a3346','#241f2e'],['#f7f3ec','#d9d2c4'],['#e8b07a','#5a4636']];
+const EN_MAJ=['THE FOOL','THE MAGICIAN','THE HIGH PRIESTESS','THE EMPRESS','THE EMPEROR','THE HIEROPHANT','THE LOVERS','THE CHARIOT','STRENGTH','THE HERMIT','WHEEL OF FORTUNE','JUSTICE','THE HANGED MAN','DEATH','TEMPERANCE','THE DEVIL','THE TOWER','THE STAR','THE MOON','THE SUN','JUDGEMENT','THE WORLD'];
+const EN_RANK=['ACE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE','TEN','PAGE','KNIGHT','QUEEN','KING'];
+const enName=c=>c.major?EN_MAJ[c.id]:`${EN_RANK[c.rank-1]} OF ${c.suit.toUpperCase()}`;
+function artSVG(c){const g='g'+(++GID);const sk=SKY[c.major?'major':c.suit];const [fur,shade]=CATCOL[c.id%CATCOL.length];
+ const crown=c.court==='왕'||c.court==='여왕'||[3,4,5].includes(c.id&&c.major?c.id:-1);
+ const sym=c.major?`<path d="M80 14l2.2 6.8 7.2.2-5.7 4.4 2 6.9-5.7-4.1-5.7 4.1 2-6.9-5.7-4.4 7.2-.2z" fill="#f6dd8f"/>`:`<g transform="translate(70 8) scale(.55)">${suitSVG(c.suit,'#f6dd8f',true)}</g>`;
+ return `<svg viewBox="0 0 100 140" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sk[0]}"/><stop offset=".6" stop-color="${sk[1]}"/><stop offset="1" stop-color="${sk[2]}"/></linearGradient></defs>
+ <rect width="100" height="140" fill="url(#${g})"/>
+ <circle cx="22" cy="24" r="1" fill="#fff" opacity=".7"/><circle cx="40" cy="12" r=".8" fill="#fff" opacity=".6"/><circle cx="60" cy="30" r=".7" fill="#fff" opacity=".5"/>
+ ${c.major?`<circle cx="50" cy="66" r="24" fill="none" stroke="#f6dd8f" stroke-width="1.2" opacity=".75"/>`:''}
+ <path d="M0 112 Q25 98 50 108 T100 104 V140 H0z" fill="${sk[0]}" opacity=".55"/>
+ <path d="M70 122c14 0 18-14 10-22" stroke="${shade}" stroke-width="6" fill="none" stroke-linecap="round"/>
+ <ellipse cx="50" cy="106" rx="21" ry="24" fill="${fur}"/><ellipse cx="50" cy="112" rx="11" ry="15" fill="#fff" opacity=".35"/>
+ <path d="M34 62 L36 42 L47 55 Z M66 62 L64 42 L53 55 Z" fill="${fur}"/><path d="M37 57 L38 47 L44 54 Z M63 57 L62 47 L56 54 Z" fill="#f2a3a3" opacity=".8"/>
+ <circle cx="50" cy="68" r="17" fill="${fur}"/>
+ <circle cx="43.5" cy="67" r="3.2" fill="#2a2033"/><circle cx="56.5" cy="67" r="3.2" fill="#2a2033"/><circle cx="44.5" cy="66" r="1" fill="#fff"/><circle cx="57.5" cy="66" r="1" fill="#fff"/>
+ <path d="M48.5 73h3l-1.5 1.8z" fill="#d97a7a"/><path d="M50 74.8q-2 2.6-4.5 1.4M50 74.8q2 2.6 4.5 1.4" stroke="#2a2033" stroke-width=".8" fill="none"/>
+ ${crown?`<path d="M38 52l4-10 4 6 4-9 4 9 4-6 4 10z" fill="#f6dd8f" stroke="#9c7b30" stroke-width=".8"/>`:''}
+ <ellipse cx="42" cy="128" rx="6" ry="3.5" fill="${fur}"/><ellipse cx="58" cy="128" rx="6" ry="3.5" fill="${fur}"/>
+ ${sym}</svg>`;}
+function backSVG(sk){const a=sk.a,cat=sk.cat;
+ return `<svg viewBox="0 0 100 160" preserveAspectRatio="none"><rect x="6" y="6" width="88" height="148" rx="5" fill="none" stroke="${a}" stroke-width="1.2"/><rect x="10" y="10" width="80" height="140" rx="3" fill="none" stroke="${a}" stroke-width=".5" opacity=".7"/>
+ <path d="M50 22a9 9 0 1 0 6 15.5A7 7 0 1 1 50 22z" fill="${a}"/>
+ <path d="M50 138a9 9 0 1 1-6-15.5A7 7 0 1 0 50 138z" fill="${a}"/>
+ <circle cx="50" cy="80" r="26" fill="none" stroke="${a}" stroke-width="1"/><circle cx="50" cy="80" r="20" fill="none" stroke="${a}" stroke-width=".5" stroke-dasharray="1.5 2"/>
+ <path d="M50 50l3 24 24 6-24 6-3 24-3-24-24-6 24-6z" fill="${a}" opacity=".9"/>
+ ${cat?`<g transform="translate(38 68) scale(.4)">${catSVG(cat).replace(/<\/?svg[^>]*>/g,'')}</g>`:`<g fill="#1b2347"><ellipse cx="50" cy="84" rx="5" ry="4.2"/><circle cx="44" cy="77.5" r="2"/><circle cx="48.3" cy="75" r="2"/><circle cx="51.7" cy="75" r="2"/><circle cx="56" cy="77.5" r="2"/></g>`}
+ ${[[20,30],[80,34],[18,120],[82,126],[26,64],[74,98],[30,100],[70,58]].map(([x,y])=>`<path d="M${x} ${y-3}l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" fill="${a}"/>`).join('')}</svg>`;}
+function catSVG(col){return `<svg viewBox="0 0 60 60"><path d="M12 22L14 6l12 10h8l12-10 2 16c3 5 4 10 2 16-3 10-13 16-20 16S13 48 10 38c-2-6-1-11 2-16z" fill="#1b2347" stroke="${col}" stroke-width="2.4" stroke-linejoin="round"/><circle cx="22" cy="32" r="2.6" fill="${col}"/><circle cx="38" cy="32" r="2.6" fill="${col}"/><path d="M27 40l3 2 3-2" stroke="${col}" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;}
+function skinStyle(sk){sk=sk||curSkin();return `--skin1:${sk.c1};--skin2:${sk.c2};--skinA:${sk.a}`;}
+function backHTML(sk){sk=sk||curSkin();return `<div class="back-face" style="${skinStyle(sk)}">${backSVG(sk)}</div>`;}
+function frontHTML(c,sk){
+ const num=c.major?c.roman:(c.court?({'시종':'P','기사':'Kn','여왕':'Q','왕':'K'})[c.court]:(c.rank===1?'A':ROMAN[c.rank]));
+ return `<div class="front-face"><div class="num">${num}</div><div class="art">${artSVG(c)}</div><div class="nm">${enName(c)}</div></div>`;}
+function cardHTML(c,opt={}){const sk=opt.skin||curSkin();
+ if(opt.flip)return `<div class="card flip ${opt.open?'open':''} ${opt.cls||''}" ${opt.attr||''}><div class="inner"><div>${backHTML(sk)}</div><div>${frontHTML(c,sk)}</div></div></div>`;
+ return `<div class="card ${opt.cls||''}" ${opt.attr||''}>${c?frontHTML(c,sk):backHTML(sk)}</div>`;}
+
+/* ================= 상태 ================= */
+const S={screen:'home',stack:[],cat:null,q:'',spread:'three',reading:null,idx:0,overlay:null,draw:null,skinPick:null};
+function curSkin(){const r=S.reading;const id=(r&&r.skin)||'basic';return SKINS.find(s=>s.id===id)||SKINS[0];}
+function go(screen,params={},push=true){if(push)S.stack.push({screen:S.screen,idx:S.idx,reading:S.reading});Object.assign(S,params);S.screen=screen;S.overlay=null;render();window.scrollTo(0,0);}
+function back(){const p=S.stack.pop();if(!p){S.screen='home';}else{S.screen=p.screen;S.idx=p.idx;S.reading=p.reading;}S.overlay=null;render();window.scrollTo(0,0);}
+function home(){S.stack=[];S.reading=null;go('home',{},false);}
+const readingKey=(q,spread,date)=>`${normQ(q)}|${spread}|${date}`;
+function findReading(key){return MEM.readings.find(r=>r.key===key);}
+function makeReading(q,cat,spread,parentId,skin){
+ const date=today(),key=readingKey(q,spread,date);
+ const ids=shuffled(key).slice(0,SPREADS[spread].n);
+ const r={id:'r'+Date.now().toString(36)+Math.floor(Math.random()*1e4),key,date,q:q.trim(),cat,spread,cards:ids,parent:parentId||null,skin:skin||'basic',created:Date.now()};
+ MEM.readings.push(r);persist();return r;}
+
+/* ================= 해설 엔진 ================= */
+function numInfo(c){
+ if(c.court)return {label:`${c.court}`,line:COURT_LINE[c.court]};
+ if(c.major){if(c.num<=10)return {label:`숫자 ${c.num}`,line:`${NUMS[c.num][0]}. ${NUM_LINE[c.num]}`};
+  const red=String(c.num).split('').reduce((a,b)=>a+ +b,0);return {label:`숫자 ${c.num} → ${red}`,line:`메이저 ${c.num}번은 ${c.num.toString().split('').join('+')}=${red}, ${NUMS[red][0]}. ${NUM_LINE[red]}`};}
+ return {label:`숫자 ${c.rank}`,line:`${NUMS[c.rank][0]}. ${NUM_LINE[c.rank]}`};}
+function arcLine(c){return c.major?`메이저 아르카나 · ${c.roman} · 정방향`:`마이너 아르카나 · ${c.suitName} · 정방향`;}
+function posMeaning(r,i){const c=cardById(r.cards[i]),k=c.kw;
+ if(r.spread==='three'){
+  if(i===0)return `이 고민은 ${J(`‘${k[0]}’`,'에서','에서')} 시작됐어요. 지나온 시간 속 ${J(k[1],'의','의')} 경험이 지금 판단의 바탕이 되고 있어요.`;
+  if(i===1)return `지금 당신은 ${J(`‘${k[0]}’`,'의','의')} 상태에 머물러 있어요. ${J(k[1],'과','와')} ${J(k[2],'이','가')} 현재 마음을 가장 크게 차지하고 있어요.`;
+  return `이대로 흐르면 ${J(`‘${k[0]}’`,'으로')} 나아가요. ${J(k[1],'이','가')} 다음 장면의 열쇠가 될 거예요.`;}
+ if(r.spread==='one')return `한 장으로 답하면 ${J(`‘${k[0]}’`,'이에요','예요').replace(/이에요$|예요$/,m=>m)}. 지금 질문에 가장 필요한 키워드는 ${EIEYO(k[1])}.`;
+ const p=SPREADS.celtic.pos[i];
+ return `${i+1}번 ${p.name} : ${p.desc}. 이 자리의 ${J(c.name,'은','는')} ${J(`‘${k[0]}’`,'을','를')} 말해요. ${J(k[1],'과','와')} ${k[2]}의 기운이 이 자리를 채우고 있어요.`;}
+function ctxMeaning(r,i){const c=cardById(r.cards[i]),cat=catById(r.cat);const dom=cat.dom[c.major?'major':c.suit];
+ let tail;
+ if(r.spread==='three')tail=['그동안 이 부분이 결정을 이끌어 왔어요.','지금 결정을 가장 크게 좌우하는 게 바로 이 부분이에요.','앞으로 이 부분이 달라질 가능성이 커요.'][i];
+ else if(r.spread==='one')tail='질문에 대한 답의 핵심이 이 부분에 있어요.';
+ else tail=['지금 질문의 중심이 여기에 있어요.','이 부분이 생각보다 발목을 잡고 있어요.','겉으로 드러나지 않지만 뿌리 깊은 이유예요.','이미 지나간 일이지만 영향은 남아 있어요.','마음 깊이 바라는 방향이 여기에 있어요.','곧 이 부분에서 움직임이 생겨요.','지금 내 태도가 이렇게 드러나 있어요.','주변 사람과 환경이 이 방향으로 작용해요.','바라는 동시에 두려운 것이 이 부분이에요.','이대로 가면 이 부분이 결말을 정해요.'][i];
+ const label=cat.id==='free'?'지금 질문':`${cat.label} 고민`;
+ return `${label}에 비추면, ${J(c.name,'은','는')} ${dom}에서 읽혀요. ${J(`‘${c.kw[0]}’`,'이','가')} 그 부분에 그대로 나타나 있어요. ${tail}`;}
+function relSentence(a,b,sym){const A=cardById(a),B=cardById(b);
+ if(sym==='×')return `${A.name}의 ${J(A.kw[0],'을','를')} ${B.name}의 ${J(B.kw[0],'이','가')} 가로지르고 있어요`;
+ if(sym==='=num')return `같은 숫자 ${A.num}, ${NUMS[A.num][1]} 단계가 겹쳐요`;
+ if(sym==='=suit')return `같은 ${A.suitName} 흐름, ${A.area} 이야기가 이어져요`;
+ const up=(A.num!=null&&B.num!=null)?(B.num>A.num?'커지며':B.num<A.num?'줄어들며':''):'';
+ return `${J(A.kw[0],'이','가')} ${up?`숫자가 ${up} `:''}${B.kw[0]} 쪽으로 이어져요`;}
+function relationsFor(r,i){const ids=r.cards,me=ids[i],C=cardById(me),out=[];
+ const add=(sym,other,text)=>{if(out.length<3&&!out.some(o=>o.other===other))out.push({sym,other,text});};
+ if(r.spread==='celtic'){if(i===0)add('×',ids[1],relSentence(ids[0],ids[1],'×'));if(i===1)add('×',ids[0],relSentence(ids[0],ids[1],'×'));}
+ ids.forEach((o,j)=>{if(j===i)return;const O=cardById(o);if(C.num!=null&&O.num!=null&&C.num===O.num&&C.num<=10)add('=',o,relSentence(me,o,'=num'));});
+ ids.forEach((o,j)=>{if(j===i)return;const O=cardById(o);if(!C.major&&C.suit===O.suit)add('=',o,relSentence(me,o,'=suit'));});
+ const nextIdx=r.spread==='celtic'?(i===0?9:(i===9?4:i+1)):(i<ids.length-1?i+1:i-1);
+ if(nextIdx>=0&&nextIdx!==i)add('→',ids[nextIdx],relSentence(me,ids[nextIdx],'→'));
+ for(let j=0;out.length<2&&j<ids.length;j++)if(j!==i)add('→',ids[j],relSentence(me,ids[j],'→'));
+ return out;}
+function teaser(r,i){const ids=r.cards;const o=i>0?ids[i-1]:ids[i+1];if(o==null)return '';const A=cardById(o),B=cardById(ids[i]);
+ return i>0?`${A.name}의 ${J(`‘${A.kw[0]}’`,'을','를')} ${B.name}의 ${J(`‘${B.kw[0]}’`,'이','가')}…`:`${B.name}의 ${J(`‘${B.kw[0]}’`,'은','는')} 다음 카드 ${A.name}의…`;}
+function majorLine(n,m){const maj=m;if(n===1)return maj?'삶의 큰 흐름이 걸린 답이에요':'지금의 일상적 선택에 관한 답이에요';
+ return ['지금의 일상적 선택에 관한 리딩이에요','일상의 고민이 큰 전환으로 이어지는 흐름이에요','삶의 큰 방향이 걸린 리딩이에요','인생의 큰 전환점에 서 있는 리딩이에요'][Math.min(maj,3)];}
+function numFlow(ids){const cs=ids.map(cardById).filter(c=>c.num!=null);if(cs.length<2)return null;
+ const ns=cs.map(c=>c.num);let up=0,down=0;for(let i=1;i<ns.length;i++){if(ns[i]>ns[i-1])up++;else if(ns[i]<ns[i-1])down++;}
+ const desc=down&&!up?'쥔 것을 내려놓고 단순해지는 흐름':up&&!down?'작은 시작이 점점 커지는 흐름':'오르내리며 방향을 찾는 흐름';
+ return {text:ns.join(' → '),desc};}
+function quint(ids){const cs=ids.map(cardById).filter(c=>c.num!=null);const parts=cs.map(c=>c.num);let s=parts.reduce((a,b)=>a+b,0);const steps=[s];
+ while(s>21){s=String(s).split('').reduce((a,b)=>a+ +b,0);steps.push(s);}return {parts,steps,card:CARDS[s]};}
+function suitDist(ids){const d={wands:0,cups:0,swords:0,pentacles:0,major:0};ids.forEach(id=>{const c=cardById(id);d[c.major?'major':c.suit]++;});return d;}
+const AREA_NAME={pentacles:'돈·현실',wands:'의지·행동',cups:'감정',swords:'생각·갈등',major:'큰 흐름'};
+const AREA_SHORT={pentacles:'현실',wands:'의지',cups:'감정',swords:'생각',major:'큰 흐름'};
+function keyCard(r){const order=[4,0,9,1,2,3,5,6,7,8];for(const i of order)if(cardById(r.cards[i]).major)return i;return 9;}
+function celticSummaryLine(r){const d=suitDist(r.cards);const parts=[`메이저 ${d.major}`];
+ const ss=['pentacles','wands','cups','swords'].map(k=>[k,d[k]]).sort((a,b)=>b[1]-a[1]);ss.filter(s=>s[1]>=2).forEach(s=>parts.push(`${SUITS.find(x=>x.key===s[0]).name} ${s[1]}`));
+ const [a,b]=ss;let tail;if(a[1]===b[1])tail=`${J(AREA_SHORT[a[0]],'과','와')} ${J(AREA_SHORT[b[0]],'이','가')} 팽팽한 배열`;else tail=`${J(AREA_SHORT[a[0]],'이','가')} 중심인 배열`;
+ if(d.major>=4)tail='큰 흐름이 강하게 작용하는 배열';return parts.join(' · ')+' : '+tail;}
+function pickActs(r,n){const cat=catById(r.cat),rr=rng(r.key+'act');const a=[...cat.acts];for(let i=a.length-1;i>0;i--){const j=Math.floor(rr()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,n);}
+function conclusion(r){const cs=r.cards.map(cardById);
+ if(r.spread==='one')return `${J(`‘${cs[0].kw[0]}’`,'이','가')} 이 질문의 답이에요. ${cs[0].kw[1]}에 마음을 두어 보세요.`;
+ if(r.spread==='three')return `지금은 ${J(`‘${cs[1].kw[0]}’`,'에','에')} 머물러 있지만, 흐름은 ${`‘${cs[2].kw[0]}’`} 쪽으로 열려 있어요.`;
+ return `${J(`‘${cs[1].kw[0]}’`,'이','가')} 발목을 잡고 있지만, 결국 ${J(`‘${cs[9].kw[0]}’`,'으로')} 나아가는 흐름이에요.`;}
+function parentOf(r){return r.parent?MEM.readings.find(x=>x.id===r.parent):null;}
+function repeats(r){const p=parentOf(r);if(!p)return [];const out=[];r.cards.forEach((id,i)=>{const j=p.cards.indexOf(id);if(j>=0)out.push({id,from:SPREADS[p.spread].pos[j].name,to:SPREADS.celtic.pos[i].name,i});});return out;}
+
+/* ================= 화면 ================= */
+const V={};
+function topBar(title,right='',noBack=false){return `<div class="top bd">${noBack?`<div class="ttl">${title}</div>`:`<button class="back" onclick="back()">${ICON.back}${title}</button>`}<div class="sub">${right}</div></div>`;}
+
+const MENU='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+const ARROW_L='<svg viewBox="0 0 60 30" width="54" height="27" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M56 12C40 6 22 8 6 18M6 18l9-9M6 18l12 3"/></svg>';
+const ARROW_R='<svg viewBox="0 0 60 30" width="54" height="27" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c16-6 34-4 50 6M54 18l-9-9M54 18l-12 3"/></svg>';
+function menuTop(){return `<div class="top"><div></div><button class="menu" onclick="S.overlay={type:'menu'};render()" aria-label="메뉴">${MENU}</button></div>`;}
+const userName=()=>LS.get('name','주림짱');
+
+/* 인트로 (피그마 1) */
+V.home=()=>`${menuTop()}
+<div class="body" style="text-align:center;padding-bottom:0;display:flex;flex-direction:column">
+ <h1 class="fadein" style="font-family:var(--hand);font-size:28px;line-height:1.35;color:#141530;margin-top:70px;word-break:keep-all;font-weight:700"><button onclick="rename()" style="font:inherit;color:inherit">${esc(userName())}님,</button><br>오늘 어떤 고민이 있으신가요?</h1>
+ <p style="color:#2b2c52;font-size:14px;margin-top:10px">캣 타로가 지금 필요한 메시지 한 장을 건네드려요</p>
+ <div class="hero">${[3,4,5].map((id,i)=>`<div class="card hc${i}">${frontHTML(cardById(id))}</div>`).join('')}</div>
+</div>
+<div class="foot"><button class="btn" onclick="go('cats')">캣타로 리딩 시작</button><button class="textbtn" onclick="go('daily')">오늘의 운세만 보기</button></div>`;
+function rename(){const v=prompt('불러드릴 이름을 알려주세요',userName());if(v&&v.trim()){LS.set('name',v.trim().slice(0,10));render();}}
+
+/* 고민 선택 (피그마 2 · SC-Q01) */
+V.cats=()=>`${menuTop()}
+<div class="body">
+ <h1 class="h1 fadein" style="margin-top:30px">요즘 어떤 고민이<br>마음에 걸려 있나요?</h1>
+ <p class="lead">고민에 맞는 배열을 골라드릴게요</p>
+ <div class="sec cats">${CATS.map(c=>`<button class="cat ${S.cat===c.id?'on':''}" onclick="pickCat('${c.id}')"><b>${c.label}</b><span>${c.sub}</span></button>`).join('')}
+ <button class="cat" onclick="go('daily')"><b>오늘의 운세</b><span>오늘 하루 내 운세가 궁금해</span></button></div>
+</div>
+<div class="foot"><button class="btn" ${S.cat?'':'disabled'} onclick="toQuestion()">다음</button></div>`;
+function pickCat(id){S.cat=id;render();}
+function toQuestion(){if(S.qCat!==S.cat){S.q='';S.custom=false;}S.qCat=S.cat;go('question');}
+
+/* 세부 고민 (피그마 3 · SC-Q02 앞부분) */
+V.question=()=>{const cat=catById(S.cat);const custom=S.custom;return `${menuTop()}
+<div class="body">
+ <h1 class="h1 fadein" style="margin-top:30px">${cat.label}<br>세부적인 고민을 선택해주세요</h1>
+ <div class="sec">${cat.qs.map(q=>`<button class="qopt ${!custom&&S.q===q?'on':''}" onclick="setQ('${esc(q)}')">${esc(q)}</button>`).join('')}
+  <button class="qopt ${custom?'on':''}" onclick="S.custom=true;if(cat_qs().includes(S.q))S.q='';render();setTimeout(()=>$('#qin')&&$('#qin').focus(),30)">직접 입력할게요</button>
+  ${custom?`<div style="margin-top:12px"><textarea id="qin" class="qin" maxlength="50" placeholder="예) ${esc(cat.qs[0])}" oninput="onQ(this.value)">${esc(S.q)}</textarea><div class="cnt"><span id="qc">${S.q.length}</span> / 50 · “네/아니오”보다 “어떻게 될까”로 물으면 더 깊게 읽혀요</div></div>`:''}
+ </div>
+ <p class="note">같은 날 같은 질문은 같은 카드가 나와요</p>
+</div>
+<div class="foot"><button id="goNext" class="btn" ${S.q.trim()?'':'disabled'} onclick="go('spreads')">다음</button></div>`;};
+const cat_qs=()=>catById(S.cat).qs;
+function onQ(v){S.q=v;$('#qc').textContent=v.length;$('#goNext').disabled=!v.trim();}
+function setQ(q){S.q=q;S.custom=false;render();}
+
+/* 배열 선택 (피그마 4 · SC-Q02 뒷부분) */
+V.spreads=()=>`${menuTop()}
+<div class="body">
+ <h1 class="h1 fadein" style="margin-top:30px">진행하고 싶은<br>타로 골라줘</h1>
+ <p class="lead">카드를 많이 뽑을수록 더 정밀한 해설이 가능해요</p>
+ <div class="sec sgrid">
+  <button class="scard ${S.spread==='three'?'on':''}" onclick="pickSpread('three')"><b>쓰리카드</b><span>3장으로 보는<br>과거·현재·미래 흐름<br>무료 해설 보기</span></button>
+  <button class="scard ${S.spread==='celtic'?'on':''}" onclick="pickSpread('celtic')"><b>켈틱크로스</b><span>10장으로 보는<br>정통 타로 방식<br>정밀 유료 해설 · ${coin(COST)}</span></button>
+ </div>
+ <div class="box" style="margin-top:16px"><div class="xs muted">나의 질문</div><div style="font-weight:700;margin-top:2px">“${esc(S.q)}”</div></div>
+</div>
+<div class="foot"><button class="btn" onclick="toDraw()">다음</button></div>`;
+function pickSpread(k){S.spread=k;render();}
+function toDraw(){const q=S.q.trim();if(!q)return;
+ const ex=findReading(readingKey(q,S.spread,today()));
+ if(ex){S.overlay={type:'already',r:ex};render();return;}
+ if(S.spread==='celtic'){S.overlay={type:'coin',from:'question'};render();return;}
+ startDraw(q,S.cat,S.spread,null,'basic');}
+function startDraw(q,cat,spread,parent,skin){S.draw={q,cat,spread,parent,skin,picks:[],up:null,shuffling:true};
+ S.reading={skin};go('draw');setTimeout(()=>{if(S.draw){S.draw.shuffling=false;render();centerDeck();}},1300);}
+
+/* 카드 뽑기 (피그마 5 · SC-Q03 / SC-P03) */
+V.draw=()=>{const d=S.draw,sp=SPREADS[d.spread],n=sp.n,k=d.picks.length,done=k>=n;
+ const deck=d.shuffling?`<div class="shuffle">${[0,1,2].map(i=>`<div class="card" style="animation-delay:${i*-.35}s">${backHTML()}</div>`).join('')}</div>`
+ :`<div class="deckwrap"><div class="deck" id="deck" onscroll="arc()">${CARDS.map((c,i)=>`<div class="dc card ${d.picks.includes(i)?'taken':''} ${d.up===i?'up':''}" data-i="${i}" onclick="tapCard(${i})">${backHTML()}</div>`).join('')}</div></div>
+ <div class="arrows"><button onclick="nudge(-1)" aria-label="왼쪽">${ARROW_L}</button><span class="hint">탭하면 올라오고, 한 번 더 탭하면 골라져요</span><button onclick="nudge(1)" aria-label="오른쪽">${ARROW_R}</button></div>`;
+ let guide;
+ if(d.spread==='celtic'){const p=sp.pos[Math.min(k,n-1)];guide=done?`<div class="pos-guide"><b>10장을 모두 골랐어요</b><p>선택완료를 누르면 카드가 공개돼요</p></div>`:`<div class="pos-guide"><b>${k+1}번 · ${J(p.name,'을','를')} 골라주세요</b><p>${p.desc}</p></div>`;}
+ else guide=`<div class="ritual"><h2 class="h1" style="font-size:20px">마음속으로 질문을 떠올려보세요</h2><p class="small muted" style="margin-top:6px">“${esc(d.q)}”<br>지금 가장 마음에 걸리는 일을 생각하며 ${n}장을 골라주세요</p></div>`;
+ const slots=d.spread==='celtic'?`<div style="margin-top:14px">${celticMap(null,{picked:k,w:30,h:48,next:!done})}</div>`
+ :`<div class="slots">${sp.pos.map((p,i)=>`<div class="slot"><div class="sl ${i===k?'next':''}">${i<k?cardHTML(null,{cls:'fadein'}):p.name}</div><p>${p.name}</p></div>`).join('')}</div>`;
+ return `<div class="top"><button class="back" onclick="back()">${ICON.back}</button><div class="sub">${Math.min(k+(done?0:1),n)} / ${n}</div></div>
+<div class="body" style="padding-bottom:170px">${d.spread==='celtic'?`<p class="small muted" style="text-align:center">“${esc(d.q)}”</p>`:''}${guide}${deck}${slots}
+ ${done?'':`<button class="textbtn" style="margin-top:14px;text-decoration:underline" onclick="autoDraw()">${d.spread==='celtic'?'남은 카드 자동으로 뽑기':'자동으로 뽑기'}</button>`}</div>
+<div class="foot"><button class="btn" ${done?'':'disabled'} onclick="reveal()">${done?'선택완료':`카드 ${n-k}장을 더 골라주세요`}</button><button class="textbtn" onclick="S.draw=null;home();go('cats')">고민 다시 선택</button></div>`;};
+function nudge(dir){const dk=$('#deck');if(dk)dk.scrollBy({left:dir*dk.clientWidth*.6,behavior:'smooth'});}
+function centerDeck(){const dk=$('#deck');if(!dk)return;dk.scrollLeft=(dk.scrollWidth-dk.clientWidth)/2;arc();}
+function arc(){{const dk=$('#deck');if(!dk)return;const r=dk.getBoundingClientRect(),cx=r.left+r.width/2;
+ dk.querySelectorAll('.dc').forEach(el=>{const b=el.getBoundingClientRect();const off=(b.left+b.width/2-cx)/r.width;const up=el.classList.contains('up');el.style.transform=`translateY(${off*off*70-(up?26:0)}px) rotate(${off*28}deg)`;});}}
+function tapCard(i){const d=S.draw;if(d.picks.length>=SPREADS[d.spread].n)return;
+ if(d.up!==i){d.up=i;document.querySelectorAll('.dc.up').forEach(e=>e.classList.remove('up'));document.querySelector(`.dc[data-i="${i}"]`).classList.add('up');arc();return;}
+ d.picks.push(i);d.up=null;const sl=$('#deck').scrollLeft;render();const dk=$('#deck');if(dk){dk.scrollLeft=sl;arc();}}
+function autoDraw(){const d=S.draw;const n=SPREADS[d.spread].n;const free=CARDS.map((_,i)=>i).filter(i=>!d.picks.includes(i));
+ while(d.picks.length<n){const j=Math.floor(Math.random()*free.length);d.picks.push(free.splice(j,1)[0]);}d.up=null;render();}
+function reveal(){const d=S.draw;const r=makeReading(d.q,d.cat,d.spread,d.parent,d.skin);S.draw=null;S.stack=S.stack.filter(s=>s.screen!=='draw');S.reading=r;S.fresh=false;S.rv={i:0,open:false};
+ go('reveal',{},false);setTimeout(openRv,500);}
+/* 카드 공개 (피그마 6) */
+V.reveal=()=>{const r=S.reading,sp=SPREADS[r.spread],i=S.rv.i,c=cardById(r.cards[i]),n=r.cards.length,last=i===n-1;
+ return `<div class="top"><div class="sub">${sp.name}</div><div class="sub">${i+1} / ${n}</div></div>
+<div class="body" style="text-align:center">
+ <p class="small muted" style="margin-top:4px">${r.spread==='celtic'?`${i+1}번 · `:''}${sp.pos[i].name} 자리</p>
+ <div class="reveal"><div class="card flip ${S.rv.open?'open':''}" id="rvCard" onclick="openRv()" style="width:220px;height:358px;font-size:24px"><div class="inner"><div>${backHTML()}</div><div>${frontHTML(c)}</div></div></div></div>
+ <div style="margin-top:20px;min-height:64px;${S.rv.open?'':'visibility:hidden'}" class="${S.rv.open?'fadein':''}"><div class="big">${esc(c.name)}</div><div class="small muted" style="margin-top:4px">${c.kw.join(' · ')}</div></div>
+</div>
+<div class="foot"><button class="btn" ${S.rv.open?'':'disabled'} onclick="nextRv()">${last?'리딩 결과 보기':'다음 카드'}</button>${n>2&&!last?`<button class="textbtn" onclick="skipRv()">모두 건너뛰기</button>`:''}</div>`;};
+function openRv(){if(!S.rv||S.rv.open||S.screen!=='reveal')return;const el=$('#rvCard');if(el)el.classList.add('open');setTimeout(()=>{if(!S.rv||S.screen!=='reveal')return;S.rv.open=true;render();},700);}
+function nextRv(){const r=S.reading;if(S.rv.i<r.cards.length-1){S.rv={i:S.rv.i+1,open:false};render();setTimeout(openRv,350);}else skipRv();}
+function skipRv(){const r=S.reading;S.rv=null;go(r.spread==='celtic'?'result10':'result',{},false);}
+
+/* 켈틱 미니맵 / 배열 */
+function celticLayout(w,h){const g=Math.max(5,w*.12),side=h/2+w/2+g,cx=side+w/2+2,cy=h+g,sx=cx+side+w/2+g*2.5+w/2,st=h+g*.6;
+ return [[cx,cy],[cx,cy],[cx,cy+h+g],[cx-side,cy],[cx,cy-h-g],[cx+side,cy],[sx,cy+st*1.5],[sx,cy+st*.5],[sx,cy-st*.5],[sx,cy-st*1.5]];}
+function celticMap(r,o){const w=o.w,h=o.h,L=celticLayout(w,h);const minY=Math.min(...L.map(p=>p[1]))-h/2,maxY=Math.max(...L.map(p=>p[1]))+h/2,maxX=Math.max(...L.map(p=>p[0]))+w/2+4;
+ const rep=r?repeats(r).map(x=>x.i):[];
+ const cells=L.map(([x,y],i)=>{const filled=r?true:i<o.picked;const next=!r&&o.next&&i===o.picked;
+  const ww=w,hh=h;const left=x-ww/2,top=y-hh/2-minY+8;
+  const inner=r?cardHTML(cardById(r.cards[i]),{flip:true,open:!S.fresh,cls:(rep.includes(i)?'repeat ':'')+'rv',attr:`style="font-size:${o.fs||9}px"`}):(filled?cardHTML(null):(i+1));
+  return `<div class="cell ${i===1?'c2':''} ${filled?'filled':''} ${next?'next':''}" style="left:${left}px;top:${top}px;width:${ww}px;height:${hh}px;" ${r?`onclick="openDetail(${i})"`:''}>${r||filled?`<span class="no">${i+1}</span>`:''}${inner}</div>`;}).join('');
+ return `<div class="cmap" style="width:${maxX}px;height:${maxY-minY+16}px">${cells}</div>`;}
+
+/* SC-T01 */
+V.result=()=>{const r=S.reading,sp=SPREADS[r.spread],cs=r.cards.map(cardById);const maj=cs.filter(c=>c.major).length;
+ return `${topBar('리딩 결과',sp.name)}
+<div class="body">
+ <div class="qcard"><div class="lbl">나의 질문</div><div class="qq">“${esc(r.q)}”</div><div class="meta">${dotDate(r.date)} · 오늘 같은 질문은 같은 카드가 나와요</div></div>
+ <div class="three">${cs.map((c,i)=>`<div class="col" onclick="openDetail(${i})"><div class="pl">${sp.pos[i].name}</div>${cardHTML(c,{flip:true,open:!S.fresh,cls:'rv'})}<div class="kw">${esc(c.kw[0])}</div><div class="cn">${esc(c.name)}</div></div>`).join('')}</div>
+ <div class="sec box"><div class="xs muted">리딩 지표</div><div style="margin-top:4px"><b>${r.spread==='one'?(maj?'메이저':'마이너'):`마이너 ${cs.length-maj} · 메이저 ${maj}`}</b> : ${majorLine(cs.length,maj)}</div></div>
+ <div class="lock" style="margin-top:10px">${ICON.lock}<span>카드 간 관계 · 숫자 흐름 분석은 켈틱크로스의 리딩 차트에서 볼 수 있어요</span></div>
+</div>
+<div class="foot"><button class="btn" onclick="openDetail(0)">카드별 해설 보기</button></div>`;};
+function openDetail(i){go(S.reading.spread==='celtic'?'detail10':'detail',{idx:i});}
+function flipAll(){if(!S.fresh)return;S.fresh=false;document.querySelectorAll('.rv').forEach((el,i)=>setTimeout(()=>el.classList.add('open'),350+i*(document.querySelectorAll('.rv').length>3?220:420)));}
+
+/* SC-T02 */
+V.detail=()=>{const r=S.reading,sp=SPREADS[r.spread],i=S.idx,c=cardById(r.cards[i]),ni=numInfo(c),n=r.cards.length;
+ const prev=i>0?cardById(r.cards[i-1]).name:null,next=i<n-1?cardById(r.cards[i+1]).name:null;
+ return `${topBar('카드 해설',`${i+1} / ${n} · ${sp.pos[i].name}`)}
+<div class="body">
+ ${n>1?`<div class="tabs">${sp.pos.map((p,j)=>`<button class="${j===i?'on':''}" onclick="S.idx=${j};render()">${p.name}</button>`).join('')}</div>`:''}
+ <div class="dhead fadein">${cardHTML(c)}<div><h2>${esc(c.name)}</h2><div class="info">${arcLine(c)}</div><div class="chips" style="margin-top:10px">${c.kw.map(k=>`<span class="chip">${esc(k)}</span>`).join('')}</div></div></div>
+ <div class="box" style="margin-top:16px"><div class="xs muted">${ni.label}</div><div style="margin-top:2px">${ni.line}</div></div>
+ <details class="step" open><summary>① 카드의 의미</summary><div class="sb">${c.mean}</div></details>
+ <details class="step" open><summary>② ${sp.pos[i].name} 자리에서</summary><div class="sb">${posMeaning(r,i)}</div></details>
+ <details class="step" open><summary>③ 내 질문에 비추면</summary><div class="sb">${ctxMeaning(r,i)}</div></details>
+ ${n>1?`<details class="step locked" open><summary>④ 앞뒤 카드와의 관계 🔒</summary><div class="sb"><div>${teaser(r,i)}</div><div class="blur">두 카드가 만나는 지점에서 이 리딩의 진짜 이유가 드러나요. 숫자의 흐름과 의미의 대비가 함께 읽혀요.</div><div class="small" style="margin-top:10px;color:var(--gold)">켈틱크로스에서 전체가 열려요</div></div></details>`:''}
+</div>
+<div class="foot navrow">
+ ${prev?`<button class="btn ghost" onclick="S.idx--;render();scrollTo(0,0)">← ${esc(prev)}</button>`:''}
+ ${next?`<button class="btn" onclick="S.idx++;render();scrollTo(0,0)">${esc(next)} →</button>`:`<button class="btn" onclick="go('summary')">종합 리딩 보기</button>`}
+</div>`;};
+
+/* SC-T03 */
+V.summary=()=>{const r=S.reading,cs=r.cards.map(cardById),nf=numFlow(r.cards),maj=cs.filter(c=>c.major).length;
+ const ev=nf&&r.cards.length>1?{t:'숫자',v:`${nf.text}`,d:nf.desc}:{t:'아르카나',v:`메이저 ${maj} · 마이너 ${cs.length-maj}`,d:majorLine(cs.length,maj)};
+ const cur=r.spread==='three'?cs[1]:cs[0];const saved=MEM.saved.includes(r.id);
+ return `${topBar('종합 리딩',SPREADS[r.spread].name)}
+<div class="body">
+ <div class="sec-t" style="margin-top:6px">오늘의 결론</div>
+ <div class="concl fadein">“${conclusion(r)}”</div>
+ <div class="sec"><div class="sec-t">근거</div><div class="box"><div class="ev"><span class="tag gold">${ev.t}</span><div><b>${ev.v}</b><div class="small muted">${ev.d}</div></div></div></div>
+  <div class="lock" style="margin-top:10px;align-items:center">${ICON.lock}<div style="flex:1"><div class="chips"><span class="chip">관계</span><span class="chip">슈트</span><span class="chip">핵심 카드</span></div></div><span class="small">근거 3개 더</span></div></div>
+ <div class="sec"><div class="sec-t">지금 해볼 것</div><div class="box"><div class="act"><b>✓</b><span>${pickActs(r,1)[0]}</span></div></div></div>
+ <div class="sec upsell"><p>${J(cur.name,'이','가')} 무엇을 붙잡고 있는지, 3개월 흐름은 어떤지 켈틱크로스로 볼 수 있어요</p><button class="btn" onclick="openCoin()">켈틱크로스 보기 · ${coin(COST)}</button></div>
+ <p class="basis">리딩 기준 · 라이더-웨이트 덱 · 수비학 · ${SPREADS[r.spread].name}${r.spread==='three'?'(과거·현재·미래)':''}<br>타로는 스스로를 돌아보는 도구예요. 중요한 결정은 현실 조건과 함께 판단하세요.</p>
+</div>
+<div class="foot btnrow"><button class="btn ghost" onclick="saveReading()">${saved?'저장됨 ✓':'기록 저장'}</button><button class="btn" onclick="share()">공유하기</button></div>`;};
+function openCoin(){const r=S.reading;const ex=findReading(readingKey(r.q,'celtic',today()));if(ex){S.overlay={type:'already',r:ex};render();return;}S.overlay={type:'coin',from:'summary'};render();}
+function saveReading(){const r=S.reading;if(!MEM.saved.includes(r.id)){MEM.saved.push(r.id);persist();toast('기록에 저장했어요 (이 기기에만 저장돼요)');}render();}
+async function share(){const r=S.reading;const cs=r.cards.map(cardById);const txt=`“${r.q}”\n${cs.map((c,i)=>`${SPREADS[r.spread].pos[i].name} ${c.name}`).join(' / ')}\n결론 : ${conclusion(r)}`;
+ try{if(navigator.share){await navigator.share({title:'타로 리딩',text:txt});return;}await navigator.clipboard.writeText(txt);toast('리딩 요약을 복사했어요');}catch(e){toast('공유를 취소했어요');}}
+
+/* 오버레이 : SC-P01 코인 / 충전 / 동일 질문 */
+function overlayHTML(){const o=S.overlay;if(!o)return '';
+ if(o.type==='menu'){const own=SKINS.filter(x=>x.rar!=='기본');return `<div class="dim" onclick="if(event.target===this){S.overlay=null;render()}"><div class="sheet"><div class="grab"></div><h3>${esc(userName())}님의 캣타로</h3>
+  <div style="margin-top:8px"><div class="mitem"><span>보유 코인</span><span><b>${coin(MEM.wallet)}</b> <button class="link" style="margin-left:8px" onclick="S.overlay={type:'charge',back:'menu'};render()">충전</button></span></div>
+  <button class="mitem" onclick="go('records')"><span>리딩 기록</span><span class="muted">${MEM.readings.length}개 ›</span></button>
+  <div class="mitem"><span>고양이 덱 도감</span><span class="muted">${MEM.inv.filter(i=>i!=='basic').length} / ${own.length}</span></div>
+  <button class="mitem" onclick="S.overlay=null;rename()"><span>이름 바꾸기</span><span class="muted">${esc(userName())} ›</span></button>
+  <button class="mitem" onclick="home()"><span>처음으로</span><span class="muted">›</span></button></div></div></div>`;}
+ if(o.type==='already'){const r=o.r;return `<div class="dim" onclick="if(event.target===this){S.overlay=null;render()}"><div class="modal"><h3>오늘 이미 뽑은 카드가 있어요</h3><p class="small muted">같은 날 같은 질문에는 같은 카드가 나와요.<br>${dotDate(r.date)} · ${SPREADS[r.spread].name}</p><div class="btnrow"><button class="btn ghost" onclick="S.overlay=null;render()">닫기</button><button class="btn" onclick="openReading('${r.id}')">결과 보기</button></div></div></div>`;}
+ if(o.type==='coin'){const q=S.reading&&S.screen==='summary'?S.reading.q:S.q;const short=COST-MEM.wallet;
+  return `<div class="dim" onclick="if(event.target===this){S.overlay=null;render()}"><div class="sheet"><div class="grab"></div>
+  <h3>켈틱크로스 · 10장</h3><p class="small muted" style="margin-top:2px">3개월 흐름까지 깊게 읽는 배열</p>
+  <div class="box" style="margin-top:14px"><div style="display:flex;justify-content:space-between"><span class="xs muted">이어서 볼 질문</span><button class="link xs" onclick="editQ()">바꾸기</button></div><div class="qq" style="font-family:var(--serif);font-weight:700;margin-top:2px">“${esc(q)}”</div></div>
+  <ul class="incl" style="margin-top:12px"><li>10장 모두 4단계 해설 (카드 간 관계 포함)</li><li>리딩 차트 · 숫자 흐름 · 퀸테센스</li><li>근거 전체 · 행동 제안 3개</li><li>고양이 덱 스킨 1종 랜덤</li></ul>
+  <div class="bal"><span>보유 <b class="${short>0?'short':''}">${coin(MEM.wallet)}</b></span><span>필요 <b>${coin(COST)}</b></span></div>
+  ${short>0?`<button class="btn" onclick="S.overlay={type:'charge',back:'${o.from}'};render()">🪙 ${short}개 더 충전하기</button>`:`<button class="btn" onclick="payCeltic()">${coin(COST)} 사용하고 보기</button>`}
+  <p class="xs faint" style="text-align:center;margin-top:10px">개인용 데모 : 실제 결제는 일어나지 않고 이 기기에만 코인이 저장돼요</p></div></div>`;}
+ if(o.type==='charge'){return `<div class="dim" onclick="if(event.target===this){S.overlay=${o.back==='menu'?"{type:'menu'}":`{type:'coin',from:'${o.back}'}`};render()}"><div class="sheet"><div class="grab"></div><h3>코인 충전</h3><p class="small muted">테스트용 충전이에요. 결제 없이 바로 채워져요.</p>
+  <div style="margin-top:14px">${[15,30,60].map(n=>`<button class="spread" onclick="charge(${n},'${o.back}')"><b>${coin(n)}</b><span class="link">충전</span></button>`).join('')}</div></div></div>`;}
+ return '';}
+function editQ(){const cur=S.screen==='summary'?S.reading.q:S.q;const v=prompt('이어서 볼 질문',cur);if(v&&v.trim()){if(S.screen==='summary'){S.celticQ=v.trim().slice(0,50);S.reading=Object.assign({},S.reading,{q:S.celticQ});}else S.q=v.trim().slice(0,50);render();}}
+function charge(n,b){MEM.wallet+=n;persist();toast(`${coin(n)} 충전했어요`);S.overlay=b==='menu'?{type:'menu'}:{type:'coin',from:b};render();}
+function payCeltic(){const fromSummary=S.screen==='summary';const q=fromSummary?S.reading.q:S.q;const cat=fromSummary?S.reading.cat:S.cat;const parent=fromSummary&&S.reading.id&&MEM.readings.some(x=>x.id===S.reading.id)?S.reading.id:null;
+ const ex=findReading(readingKey(q,'celtic',today()));if(ex){S.overlay={type:'already',r:ex};render();return;}
+ MEM.wallet-=COST;persist();
+ const pool=SKINS.filter(s=>s.rar!=='기본');let roll=Math.random()*100,tier='일반';for(const t of ['전설','에픽','레어','일반']){if(roll<RAR[t].p){tier=t;break;}roll-=RAR[t].p;}
+ const cand=pool.filter(s=>s.rar===tier);const sk=cand[Math.floor(Math.random()*cand.length)];const dup=MEM.inv.includes(sk.id);if(!dup){MEM.inv.push(sk.id);persist();}
+ S.skinPick={skin:sk.id,dup,q,cat,parent,open:false};go('skin');}
+function openReading(id){const r=MEM.readings.find(x=>x.id===id);if(!r)return;S.reading=r;S.fresh=false;S.overlay=null;go(r.spread==='celtic'?'result10':'result');}
+
+/* SC-P02 */
+V.skin=()=>{const p=S.skinPick,sk=SKINS.find(s=>s.id===p.skin);const own=SKINS.filter(s=>s.rar!=='기본');
+ return `<div class="top bd"><div class="ttl">덱 고르기</div><div class="sub">켈틱크로스</div></div>
+<div class="body" style="text-align:center">
+ <h1 class="h1 fadein" style="font-size:22px;margin-top:10px">오늘 리딩을 함께할<br>고양이 덱이 도착했어요</h1>
+ <div class="reveal"><div class="card flip ${p.open?'open':''}" id="skinCard" onclick="openSkin()" style="width:150px;height:244px"><div class="inner"><div>${backHTML(SKINS[0])}</div><div>${backHTML(sk)}</div></div></div></div>
+ <div style="margin-top:18px;min-height:56px;${p.open?'':'visibility:hidden'}"><span class="rar" style="color:${RAR[sk.rar].c};border-color:${RAR[sk.rar].c}">${sk.rar}</span>${p.dup?' <span class="rar" style="color:var(--muted);border-color:var(--line)">중복</span>':''}<div class="big" style="margin-top:8px">${sk.name}</div></div>
+ ${p.open?'':'<p class="small muted">카드를 탭해서 열어보세요</p>'}
+ <div class="sec box" style="text-align:left"><div style="display:flex;justify-content:space-between"><b class="small">고양이 덱 도감</b><span class="small muted">${MEM.inv.filter(i=>i!=='basic').length} / ${own.length}</span></div>
+  <div class="dex">${own.map(s=>`<div class="d ${MEM.inv.includes(s.id)?'have':''}">${backHTML(s)}</div>`).join('')}</div>
+  <p class="xs faint" style="margin-top:10px">확률 : 일반 60% · 레어 28% · 에픽 10% · 전설 2%<br>덱 스킨은 그림만 바꾸고 카드 결과에는 영향을 주지 않아요.</p></div>
+</div>
+<div class="foot"><button class="btn" ${p.open?'':'disabled'} onclick="useSkin()">이 덱으로 뽑기</button></div>`;};
+function openSkin(){if(S.skinPick.open)return;S.skinPick.open=true;$('#skinCard').classList.add('open');setTimeout(render,750);}
+function useSkin(){const p=S.skinPick;S.stack=S.stack.filter(s=>s.screen!=='skin');startDraw(p.q,p.cat,'celtic',p.parent,p.skin);S.stack.pop();}
+
+/* SC-P04 */
+V.result10=()=>{const r=S.reading,rep=repeats(r);
+ return `${topBar('리딩 결과','켈틱크로스')}
+<div class="body">
+ <div class="qcard"><div class="qq">“${esc(r.q)}”</div><div class="meta">${dotDate(r.date)} · 카드를 탭하면 해당 자리 해설로 이동해요</div></div>
+ <div style="margin-top:22px;display:flex;justify-content:center">${celticMap(r,{w:52,h:84,fs:8.5})}</div>
+ ${rep.length?`<div class="box" style="margin-top:16px;border-color:rgba(226,102,95,.55)"><b class="small">쓰리카드에서 본 카드가 다시 나왔어요</b><div class="small muted" style="margin-top:4px">${rep.map(x=>`${cardById(x.id).name}(${x.from} → ${x.to})`).join(' · ')}</div></div>`:''}
+ <div class="box" style="margin-top:10px"><div class="xs muted">배열 한 줄 요약</div><div style="margin-top:2px">${celticSummaryLine(r)}</div></div>
+ <div style="text-align:center;margin-top:14px"><button class="link" onclick="openDetail(0)">카드별 해설로 바로 가기 ›</button></div>
+</div>
+<div class="foot"><button class="btn" onclick="go('chart')">리딩 차트 보기</button></div>`;};
+
+/* SC-P05 */
+V.chart=()=>{const r=S.reading,cs=r.cards.map(cardById),d=suitDist(r.cards),pos=SPREADS.celtic.pos;
+ const rows=cs.map((c,i)=>`<tr><td>${i+1} ${pos[i].name}</td><td><b>${esc(c.name)}</b></td><td>${c.num==null?'-':c.num}</td><td>${c.major?'메이저':'마이너'}</td><td>${esc(c.kw[0])}</td></tr>`);
+ const order=['pentacles','wands','cups','swords','major'];const top2=[...order].sort((a,b)=>d[b]-d[a]).slice(0,2);const mx=Math.max(...order.map(k=>d[k]),1);
+ const courts=cs.filter(c=>c.court).length;
+ const cnt={};cs.forEach(c=>{if(c.num!=null&&c.num<=10)cnt[c.num]=(cnt[c.num]||0)+1;});
+ const reps=[];cs.forEach(c=>{if(c.num!=null&&cnt[c.num]>1&&!reps.includes(c.num))reps.push(c.num);});
+ const qt=quint(r.cards);const ki=keyCard(r),kc=cs[ki];
+ return `${topBar('리딩 차트','켈틱크로스')}
+<div class="body">
+ <div class="box"><div class="sec-t" style="margin:0 0 8px">대응표 (10행)</div><div style="overflow-x:auto"><table class="ct"><tr><th>자리</th><th>카드</th><th>숫자</th><th>아르카나</th><th>키워드</th></tr>${rows.slice(0,S.chartAll?10:4).join('')}</table></div>
+ ${S.chartAll?'':`<button class="link small" style="margin-top:8px" onclick="S.chartAll=true;render()">… 펼쳐보기</button>`}</div>
+ <div class="box"><div class="sec-t" style="margin:0 0 4px">삶의 영역 분포</div>${order.map(k=>`<div class="bar ${top2.includes(k)&&d[k]>0?'hi':''}"><span class="bl">${AREA_NAME[k]}</span><span class="bt"><span class="bf" style="display:block;width:${d[k]/mx*100}%"></span></span><span class="bv">${d[k]}</span></div>`).join('')}
+ <div class="small muted" style="margin-top:6px">${celticSummaryLine(r).split(' : ')[1]}</div></div>
+ <div class="chips" style="margin-top:10px"><button class="chip" onclick="toast('${d.major>=5?'큰 흐름이 상황을 이끌고 있어요':'대부분 내 선택으로 바꿀 수 있는 일이에요'}')">메이저 ${d.major}/10</button><button class="chip" onclick="toast('${courts?'사람이 이 문제에 크게 얽혀 있어요':'사람보다 상황 자체가 중심이에요'}')">코트 ${courts}</button><button class="chip" onclick="toast('모두 정방향 : 에너지가 막힘없이 드러나 있어요')">역방향 0</button></div>
+ <div class="box" style="margin-top:10px"><div class="xs muted">숫자 흐름</div><div style="margin-top:2px">${reps.length?`<b>${reps.map(n=>`${n} ×${cnt[n]}`).join(' → ')}</b> ${reps.length>1?`${NUMS[reps[0]][1]} 단계에서 ${NUMS[reps[reps.length-1]][1]} 단계로`:`${NUMS[reps[0]][1]} 단계가 반복돼요`}`:'반복되는 숫자 없이 각자 다른 단계 : 상황이 여러 갈래로 나뉘어 있어요'}</div></div>
+ <div class="box"><div class="xs muted">퀸테센스</div><div class="formula">${qt.parts.join('+')||'0'} = ${qt.steps.join(' → ')}</div><div class="big" style="margin-top:4px">${qt.card.num} ${qt.card.name}</div><div class="small muted">이 리딩은 결국 ${J(`‘${qt.card.kw[0]}’`,'에','에')} 관한 이야기예요 (코트 카드는 계산에서 제외)</div></div>
+ <button class="box" style="width:100%;text-align:left;margin-top:10px;border-color:var(--gold)" onclick="openDetail(${ki})"><div class="xs muted">핵심 카드</div><div class="big" style="margin-top:2px">${kc.major?kc.roman+' ':''}${kc.name} <span class="small muted" style="font-family:var(--sans);font-weight:400">· ${ki+1}번 ${pos[ki].name} 자리</span></div><div class="small muted">${kc.mean.split('. ')[0]}.</div></button>
+</div>
+<div class="foot"><button class="btn" onclick="openDetail(0)">카드별 해설 보기</button></div>`;};
+
+/* SC-P06 */
+V.detail10=()=>{const r=S.reading,pos=SPREADS.celtic.pos,i=S.idx,c=cardById(r.cards[i]),ni=numInfo(c),rep=repeats(r).find(x=>x.i===i),rels=relationsFor(r,i);
+ const gd=c.major?`생명나무 경로 ${c.id+11}`:(c.court?`궁정 카드 · ${SEPH[COURT_SEPH[c.court]]}`:`${GD[c.suit][c.rank-1]}`);
+ const tree=c.major?`메이저 ${c.roman} · 히브리 문자 경로`:(c.court?`${c.suitName}의 ${c.court}`:`생명나무 ${c.rank} · ${SEPH[c.rank]}`);
+ const prevName=i>0?`${i} ${cardById(r.cards[i-1]).name}`:'차트',nextName=i<9?`${i+2} ${cardById(r.cards[i+1]).name}`:null;
+ const p=parentOf(r);
+ return `${topBar('카드 해설',`${i+1} / 10 · ${pos[i].name}`)}
+<div class="body">
+ <div class="tabs">${pos.map((_,j)=>`<button class="${j===i?'on':''}" onclick="S.idx=${j};render()">${j+1}</button>`).join('')}</div>
+ <div class="dhead fadein">${cardHTML(c,{cls:rep?'repeat':''})}<div><h2>${esc(c.name)}</h2><div class="info">${arcLine(c)}</div>${rep?`<div class="small" style="color:var(--red);margin-top:4px">쓰리카드에서도 ${rep.from} 자리</div>`:''}
+ <div class="box" style="margin-top:10px;padding:10px 12px"><div class="xs muted">골든던 칭호</div><div class="small"><b>${gd}</b></div><div class="xs muted" style="margin-top:4px">${tree}</div></div></div></div>
+ <div class="chips" style="margin-top:14px">${c.kw.map(k=>`<span class="chip">${esc(k)}</span>`).join('')}<span class="chip gold">${ni.label}</span></div>
+ <details class="step" open><summary>① 카드의 의미</summary><div class="sb">${c.mean}<div class="small muted" style="margin-top:6px">${ni.line}</div></div></details>
+ <details class="step" open><summary>② ${i+1}번 ${pos[i].name} 자리에서</summary><div class="sb">${posMeaning(r,i)}</div></details>
+ <details class="step" open><summary>③ 내 질문에 비추면</summary><div class="sb">${ctxMeaning(r,i)}</div></details>
+ <details class="step" open><summary>④ 다른 카드와의 관계</summary><div class="sb">${rels.map(x=>`<div class="rel"><span class="sy">${x.sym}</span><div><b>${r.cards.indexOf(x.other)+1} ${esc(cardById(x.other).name)}</b><div class="small" style="color:#d6cfbf">${x.text}</div></div></div>`).join('')}</div></details>
+ ${rep&&p?`<div class="box" style="margin-top:12px"><div class="xs muted">무료 리딩과의 연결</div><div style="margin-top:2px">쓰리카드에서는 ${rep.from} 자리의 ${J(`‘${c.kw[0]}’`,'이었고','였고')}, 여기서는 ${rep.to} 자리에서 그 이유까지 보여요</div></div>`:''}
+</div>
+<div class="foot navrow"><button class="btn ghost" onclick="${i>0?'S.idx--;render();scrollTo(0,0)':"go('chart')"}">← ${esc(prevName)}</button>
+${nextName?`<button class="btn" onclick="S.idx++;render();scrollTo(0,0)">${esc(nextName)} →</button>`:`<button class="btn" onclick="go('summary10')">종합 리딩 보기</button>`}</div>`;};
+
+/* SC-P07 */
+V.summary10=()=>{const r=S.reading,cs=r.cards.map(cardById),pos=SPREADS.celtic.pos,d=suitDist(r.cards),qt=quint(r.cards),ki=keyCard(r),p=parentOf(r);
+ const cnt={};cs.forEach(c=>{if(c.num!=null&&c.num<=10)cnt[c.num]=(cnt[c.num]||0)+1;});const reps=[];cs.forEach(c=>{if(c.num!=null&&cnt[c.num]>1&&!reps.includes(c.num))reps.push(c.num);});
+ const numEv=reps.length>1?`${reps[0]} → ${reps[reps.length-1]}`:(reps.length?`${reps[0]} 반복`:numFlow(r.cards)?.text.split(' → ').slice(0,3).join(' → ')||'-');
+ const numD=reps.length>1?`${NUMS[reps[0]][1]} 단계에서 ${NUMS[reps[reps.length-1]][1]} 단계로`:(reps.length?`${NUMS[reps[0]][1]} 단계가 겹쳐 강조됨`:'숫자가 보여주는 단계의 흐름');
+ const top=['pentacles','wands','cups','swords','major'].sort((a,b)=>d[b]-d[a]);
+ const evs=[['숫자',numEv,numD],['퀸테센스',`${qt.card.num} ${qt.card.name}`,`결국 ${qt.card.kw[0]}의 문제`],['핵심',cs[ki].name,`${pos[ki].name} 자리 · ${cs[ki].kw[0]}`],['관계',`${cs[0].name} × ${cs[1].name}`,`${J(cs[0].kw[0],'을','를')} ${J(cs[1].kw[0],'이','가')} 가로지름`],['영역',`${AREA_SHORT[top[0]]} ${d[top[0]]} · ${AREA_SHORT[top[1]]} ${d[top[1]]}`,d[top[0]]===d[top[1]]?'균형':`${AREA_SHORT[top[0]]} 중심`]];
+ const saved=MEM.saved.includes(r.id);
+ return `${topBar('종합 리딩','켈틱크로스')}
+<div class="body">
+ <div class="sec-t" style="margin-top:6px">결론</div>
+ <div class="concl fadein">“${conclusion(r)}”</div>
+ <div class="sec"><div class="sec-t">근거 5</div><div class="box">${evs.map(e=>`<div class="ev"><span class="tag gold">${e[0]}</span><div><b>${esc(e[1])}</b><div class="small muted">${esc(e[2])}</div></div></div>`).join('')}</div></div>
+ <div class="sec"><div class="sec-t">지금 해볼 것</div><div class="box">${pickActs(r,3).map((a,i)=>`<div class="act"><b>${i+1}.</b><span>${a}</span></div>`).join('')}</div></div>
+ ${p?`<div class="sec"><div class="sec-t">쓰리카드와 비교하면</div><div class="box">쓰리카드의 결론은 “${conclusion(p)}”였어요.<br><span class="muted">여기에 무엇이 막고 있는지(${cs[1].name} : ${cs[1].kw[0]})와 어디로 가는지(${cs[9].name} : ${cs[9].kw[0]})가 더해졌어요.</span></div></div>`:''}
+ <p class="basis">라이더-웨이트 · 수비학 · 골든던 칭호 · 켈틱크로스(웨이트식)<br>타로는 스스로를 돌아보는 도구예요. 중요한 결정은 현실 조건과 함께 판단하세요.</p>
+</div>
+<div class="foot btnrow"><button class="btn ghost" onclick="saveReading()">${saved?'저장됨 ✓':'기록 저장'}</button><button class="btn" onclick="share()">공유하기</button></div>`;};
+
+/* 오늘의 운세 */
+V.daily=()=>{const id=shuffled('daily|'+today())[0],c=cardById(id),ni=numInfo(c);const sk=SKINS[0];
+ return `${topBar('오늘의 운세',dotDate(today()))}
+<div class="body" style="text-align:center">
+ <p class="small muted" style="margin-top:6px">하루 한 장, 오늘의 카드</p>
+ <div class="reveal"><div class="card flip ${S.dailyOpen?'open':''}" id="dcard" onclick="openDaily()" style="width:150px;height:244px;font-size:18px"><div class="inner"><div>${backHTML(sk)}</div><div>${frontHTML(c,sk)}</div></div></div></div>
+ ${S.dailyOpen?`<div class="fadein" style="text-align:left;margin-top:22px"><h2 class="h1" style="text-align:center">${c.name}</h2><div class="chips" style="justify-content:center;margin-top:10px">${c.kw.map(k=>`<span class="chip">${k}</span>`).join('')}</div>
+ <div class="box" style="margin-top:16px">${c.mean}</div><div class="box"><div class="xs muted">${ni.label}</div>${ni.line}</div>
+ <div class="box"><div class="xs muted">오늘의 한 줄</div>오늘은 ${J(`‘${c.kw[0]}’`,'을','를')} 떠올리며 하루를 보내보세요. ${J(c.kw[1],'이','가')} 작은 힌트가 될 거예요.</div></div>`:'<p class="small muted" style="margin-top:16px">카드를 탭해서 열어보세요</p>'}
+</div>
+<div class="foot"><button class="btn ghost" onclick="home()">고민 리딩하러 가기</button></div>`;};
+function openDaily(){if(S.dailyOpen)return;$('#dcard').classList.add('open');setTimeout(()=>{S.dailyOpen=true;render();},750);}
+
+/* 기록 */
+V.records=()=>{const list=[...MEM.readings].sort((a,b)=>b.created-a.created);
+ return `${topBar('리딩 기록',`${coin(MEM.wallet)}`)}
+<div class="body">${list.length?list.map(r=>`<button class="rec" onclick="openReading('${r.id}')"><div style="display:flex;justify-content:space-between"><span class="xs muted">${dotDate(r.date)} · ${SPREADS[r.spread].name} · ${catById(r.cat).label}</span>${MEM.saved.includes(r.id)?'<span class="xs" style="color:var(--gold)">저장됨</span>':''}</div><div style="font-weight:700;margin-top:2px">“${esc(r.q)}”</div><div class="small muted">${r.cards.slice(0,3).map(id=>cardById(id).name).join(' · ')}${r.cards.length>3?' 외':''}</div></button>`).join(''):'<div class="empty">아직 리딩 기록이 없어요</div>'}
+${list.length?`<button class="link small" style="display:block;margin:24px auto 0;color:var(--faint)" onclick="resetAll()">기록 · 코인 초기화</button>`:''}</div>`;};
+function resetAll(){if(!confirm('이 기기에 저장된 리딩 기록, 코인, 덱 도감을 모두 초기화할까요?'))return;MEM={readings:[],wallet:20,inv:['basic'],saved:[]};persist();home();}
+
+/* ================= 렌더 ================= */
+function render(){const v=V[S.screen]||V.home;const app=document.getElementById('app');app.className=(S.screen==='home'?'light ':'')+(render.last===S.screen?'noanim':'');render.last=S.screen;app.innerHTML=v()+overlayHTML();
+ if(['result','result10'].includes(S.screen))flipAll();}
+window.addEventListener('resize',arc);
+render();
+</script>
+</body>
+</html>
